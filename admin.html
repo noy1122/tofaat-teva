@@ -643,7 +643,7 @@ function renderTable(rows) {
 
     setTableState('data');
     pageRows.forEach((r, i) => {
-        const rowNum = startIdx + i + 1;
+        const rowNum = totalRows - startIdx - i;
         const tr = document.createElement('tr');
         tr.className = 'border-b border-gray-100 cursor-pointer';
         tr.title = 'לחץ לפרטים מלאים';

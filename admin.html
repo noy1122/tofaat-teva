@@ -14,7 +14,10 @@
         .stat-card { transition: transform 0.15s ease; }
         .stat-card:hover { transform: translateY(-2px); }
         #table-container { overflow-x: auto; }
-        table { border-collapse: collapse; min-width: 900px; }
+        table { border-collapse: collapse; width: 100%; }
+        #section-members table td, #section-members table th { padding: 6px 8px; font-size: 0.75rem; }
+        #section-members table td:first-child, #section-members table th:first-child { padding-right: 12px; }
+        #section-members table td:last-child, #section-members table th:last-child { padding-left: 12px; }
         th { position: sticky; top: 0; z-index: 10; }
         th.sortable { cursor: pointer; user-select: none; }
         th.sortable:hover { background-color: #e5e7eb !important; }
@@ -150,7 +153,7 @@
         </div>
     </div>
 
-    <main class="max-w-screen-xl mx-auto px-4 py-6">
+    <main class="max-w-full mx-auto px-6 py-6">
 
         <!-- ══ TAB: חברים ══ -->
         <div id="section-members">
@@ -199,23 +202,23 @@
                     <p class="text-lg font-medium">לא נמצאו תוצאות</p>
                 </div>
                 <div id="table-container" class="hidden">
-                    <table class="w-full text-sm">
+                    <table class="w-full">
                         <thead>
                             <tr class="bg-gray-50 border-b border-gray-200">
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50">#</th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap sortable sorted-desc" onclick="sortTable('created_at')" data-col="created_at">תאריך ושעה <span class="sort-arrow">▼</span></th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap sortable" onclick="sortTable('name')" data-col="name">שם מלא <span class="sort-arrow">▼</span></th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('id_number')" data-col="id_number">ת.ז. <span class="sort-arrow">▼</span></th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('gender')" data-col="gender">מין <span class="sort-arrow">▼</span></th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('phone')" data-col="phone">טלפון <span class="sort-arrow">▼</span></th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('city')" data-col="city">עיר <span class="sort-arrow">▼</span></th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('region')" data-col="region">איזור <span class="sort-arrow">▼</span></th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap sortable" onclick="sortTable('vehicle_type')" data-col="vehicle_type">סוג רכב <span class="sort-arrow">▼</span></th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap sortable" onclick="sortTable('vehicle_plate')" data-col="vehicle_plate">מ. רכב <span class="sort-arrow">▼</span></th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap sortable" onclick="sortTable('birth_date')" data-col="birth_date">ת. לידה <span class="sort-arrow">▼</span></th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap sortable" onclick="sortTable('rescue_tools')" data-col="rescue_tools">כלי חילוץ <span class="sort-arrow">▼</span></th>
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50">הערות</th>
-                                <th class="px-4 py-3 bg-gray-50"></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50">#</th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap sortable sorted-desc" onclick="sortTable('created_at')" data-col="created_at">תאריך <span class="sort-arrow">▼</span></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap sortable" onclick="sortTable('name')" data-col="name">שם <span class="sort-arrow">▼</span></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('id_number')" data-col="id_number">ת.ז. <span class="sort-arrow">▼</span></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('gender')" data-col="gender">מין <span class="sort-arrow">▼</span></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('phone')" data-col="phone">טלפון <span class="sort-arrow">▼</span></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('city')" data-col="city">עיר <span class="sort-arrow">▼</span></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('region')" data-col="region">איזור <span class="sort-arrow">▼</span></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('vehicle_type')" data-col="vehicle_type">רכב <span class="sort-arrow">▼</span></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('vehicle_plate')" data-col="vehicle_plate">לוחית <span class="sort-arrow">▼</span></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('birth_date')" data-col="birth_date">לידה <span class="sort-arrow">▼</span></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('rescue_tools')" data-col="rescue_tools">חילוץ <span class="sort-arrow">▼</span></th>
+                                <th class="text-right font-semibold text-gray-600 bg-gray-50">הערות</th>
+                                <th class="bg-gray-50"></th>
                             </tr>
                         </thead>
                         <tbody id="table-body"></tbody>
@@ -657,23 +660,23 @@ function renderTable(rows) {
         const safeName = (r.first_name + ' ' + r.last_name).replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
         tr.innerHTML = `
-            <td class="px-4 py-3 text-gray-400 text-xs font-mono">${rowNum}</td>
-            <td class="px-4 py-3 text-gray-600 whitespace-nowrap text-xs">${dateStr}</td>
-            <td class="px-4 py-3 font-semibold text-gray-800 whitespace-nowrap">${r.first_name || ''} ${r.last_name || ''}</td>
-            <td class="px-4 py-3 text-gray-600 font-mono text-xs">${r.id_number || '-'}</td>
-            <td class="px-4 py-3">${genderBadge}</td>
-            <td class="px-4 py-3 text-gray-700 whitespace-nowrap font-mono text-xs">${r.phone || '-'}</td>
-            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">${r.city || '-'}</td>
-            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">${r.region || '-'}</td>
-            <td class="px-4 py-3 text-gray-600 whitespace-nowrap text-xs">${r.vehicle_type || '-'}</td>
-            <td class="px-4 py-3 text-gray-600 font-mono text-xs">${r.vehicle_plate || '-'}</td>
-            <td class="px-4 py-3 text-gray-600 whitespace-nowrap text-xs">${r.birth_date || '-'}</td>
-            <td class="px-4 py-3 text-gray-600 text-xs max-w-[140px] truncate" title="${(r.rescue_tools || '').replace(/"/g, '&quot;')}">${r.rescue_tools || '-'}</td>
-            <td class="px-4 py-3 text-gray-500 text-xs max-w-[120px] truncate" title="${(r.notes || '').replace(/"/g, '&quot;')}">${r.notes || '-'}</td>
-            <td class="px-4 py-3">
+            <td class="text-gray-400 font-mono">${rowNum}</td>
+            <td class="text-gray-600 whitespace-nowrap">${dateStr}</td>
+            <td class="font-semibold text-gray-800 whitespace-nowrap">${r.first_name || ''} ${r.last_name || ''}</td>
+            <td class="text-gray-600 font-mono">${r.id_number || '-'}</td>
+            <td>${genderBadge}</td>
+            <td class="text-gray-700 whitespace-nowrap font-mono">${r.phone || '-'}</td>
+            <td class="text-gray-600">${r.city || '-'}</td>
+            <td class="text-gray-600">${r.region || '-'}</td>
+            <td class="text-gray-600">${r.vehicle_type || '-'}</td>
+            <td class="text-gray-600 font-mono">${r.vehicle_plate || '-'}</td>
+            <td class="text-gray-600 whitespace-nowrap">${r.birth_date || '-'}</td>
+            <td class="text-gray-600 max-w-[120px] truncate" title="${(r.rescue_tools || '').replace(/"/g, '&quot;')}">${r.rescue_tools || '-'}</td>
+            <td class="text-gray-500 max-w-[100px] truncate" title="${(r.notes || '').replace(/"/g, '&quot;')}">${r.notes || '-'}</td>
+            <td>
                 <button onclick="openDeleteModal(${r.id}, '${safeName}')"
-                    class="text-red-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-lg transition-colors" title="מחק">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    class="text-red-400 hover:text-red-600 hover:bg-red-50 p-1 rounded transition-colors" title="מחק">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 </button>
             </td>
         `;

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>פאנל ניהול - תופעת טבע</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Heebo', sans-serif; }
+        .stat-card { transition: transform 0.15s ease; }
+        .stat-card:hover { transform: translateY(-2px); }
+        #table-container { overflow-x: auto; }
+        table { border-collapse: collapse; min-width: 900px; }
+        th { position: sticky; top: 0; z-index: 10; }
+        tr:hover td { background-color: #f0fdf4; }
+        .badge { display: inline-block; padding: 2px 10px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+        .loader { border: 3px solid #d1fae5; border-top-color: #16a34a; border-radius: 50%; width: 36px; height: 36px; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Login page glass inputs */
+        .glass-input::placeholder { color: rgba(255,255,255,.4); }
+        .glass-input { caret-color: white; }
+
+        /* Login hero background */
+        #login-section {
+            background: linear-gradient(150deg, #0c4a6e 0%, #0369a1 35%, #0284c7 65%, #22d3ee 100%);
+        }
+        #login-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,.055) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<!-- ─── LOGIN SECTION ─────────────────────────────────── -->
+<div id="login-section" class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+
+    <!-- Decorative blobs -->
+    <div style="position:absolute;top:-120px;right:-120px;width:520px;height:520px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none"></div>
+    <div style="position:absolute;bottom:-80px;left:-80px;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.05);pointer-events:none"></div>
+    <div style="position:absolute;top:45%;left:15%;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none"></div>
+
+    <div class="relative z-10 w-full max-w-sm">
+
+        <!-- Logo + title above card -->
+        <div class="text-center mb-7">
+            <div class="inline-flex items-center justify-center mb-4" style="width:100px;height:100px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);padding:7px;box-shadow:0 8px 32px rgba(0,0,0,.2)">
+                <div style="width:100%;height:100%;border-radius:50%;background:white;overflow:hidden;display:flex;align-items:center;justify-content:center">
+                    <img src="images/logo.png" alt="תופעת טבע" style="width:72px;height:72px;object-fit:contain">
+                </div>
+            </div>
+            <h1 class="text-3xl font-black text-white" style="text-shadow:0 2px 14px rgba(0,0,0,.25)">פאנל ניהול</h1>
+            <p class="text-sm mt-1" style="color:rgba(255,255,255,.65);font-weight:500">תופעת טבע · כניסה מורשית בלבד</p>
+        </div>
+
+        <!-- Glass card -->
+        <div class="rounded-3xl p-7" style="background:rgba(255,255,255,.13);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1.5px solid rgba(255,255,255,.28);box-shadow:0 24px 64px rgba(0,0,0,.22)">
+
+            <!-- Error -->
+            <div id="login-error" class="hidden mb-5 p-3.5 rounded-2xl text-sm text-center font-semibold" style="background:rgba(239,68,68,.18);border:1px solid rgba(239,68,68,.35);color:#fca5a5"></div>
+
+            <!-- Username -->
+            <div class="mb-4">
+                <label class="block text-sm font-bold mb-2" style="color:rgba(255,255,255,.85)">שם משתמש</label>
+                <input id="login-username" type="text" value="admin"
+                    class="glass-input w-full px-4 py-3 rounded-xl text-sm font-medium outline-none transition-all"
+                    style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.22);color:white"
+                    onfocus="this.style.borderColor='rgba(255,255,255,.65)';this.style.background='rgba(255,255,255,.2)'"
+                    onblur="this.style.borderColor='rgba(255,255,255,.22)';this.style.background='rgba(255,255,255,.12)'">
+            </div>
+
+            <!-- Password -->
+            <div class="mb-7">
+                <label class="block text-sm font-bold mb-2" style="color:rgba(255,255,255,.85)">סיסמא</label>
+                <input id="login-password" type="password" placeholder="••••••••"
+                    class="glass-input w-full px-4 py-3 rounded-xl text-sm font-medium outline-none transition-all"
+                    style="background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.22);color:white"
+                    onfocus="this.style.borderColor='rgba(255,255,255,.65)';this.style.background='rgba(255,255,255,.2)'"
+                    onblur="this.style.borderColor='rgba(255,255,255,.22)';this.style.background='rgba(255,255,255,.12)'">
+            </div>
+
+            <!-- Submit -->
+            <button id="login-btn"
+                class="w-full font-black py-3.5 rounded-2xl text-base transition-all hover:-translate-y-0.5 hover:shadow-xl"
+                style="background:rgba(255,255,255,.96);color:#0c4a6e;box-shadow:0 4px 24px rgba(0,0,0,.22)">
+                כניסה למערכת
+            </button>
+        </div>
+
+        <p class="text-center text-xs mt-5" style="color:rgba(255,255,255,.35)">© תופעת טבע · מערכת ניהול פנימית</p>
+    </div>
+</div>
+
+<!-- ─── DASHBOARD SECTION ─────────────────────────────── -->
+<div id="dashboard-section" class="hidden min-h-screen">
+
+    <!-- Top Bar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-screen-xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <img src="images/logo.png" alt="תופעת טבע" class="w-10 h-10 object-contain">
+                <div>
+                    <h1 class="font-bold text-gray-800 leading-tight">פאנל ניהול</h1>
+                    <p class="text-xs text-gray-500">תופעת טבע</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="text-sm text-gray-500 hover:text-gray-700 hidden sm:block">→ אתר ראשי</a>
+                <button id="logout-btn" class="flex items-center gap-1.5 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition-colors font-medium">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    יציאה
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tab Nav -->
+    <div class="border-b border-gray-200 bg-white sticky top-[61px] z-40">
+        <div class="max-w-screen-xl mx-auto px-4">
+            <div class="flex gap-0">
+                <button id="tab-members" onclick="switchTab('members')"
+                    class="tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-green-600 text-green-700 transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    חברים
+                </button>
+                <button id="tab-analytics" onclick="switchTab('analytics')"
+                    class="tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    אנליטיקה
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-screen-xl mx-auto px-4 py-6">
+
+        <!-- ══ TAB: חברים ══ -->
+        <div id="section-members">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="stat-card bg-white rounded-xl shadow-sm p-5 text-center border-t-4 border-green-500">
+                    <p class="text-3xl font-bold text-green-700" id="stat-total">-</p>
+                    <p class="text-sm text-gray-500 mt-1">סה"כ נרשמו</p>
+                </div>
+                <div class="stat-card bg-white rounded-xl shadow-sm p-5 text-center border-t-4 border-blue-500">
+                    <p class="text-3xl font-bold text-blue-700" id="stat-today">-</p>
+                    <p class="text-sm text-gray-500 mt-1">הצטרפו היום</p>
+                </div>
+                <div class="stat-card bg-white rounded-xl shadow-sm p-5 text-center border-t-4 border-purple-500">
+                    <p class="text-3xl font-bold text-purple-700" id="stat-month">-</p>
+                    <p class="text-sm text-gray-500 mt-1">החודש</p>
+                </div>
+            </div>
+
+            <!-- Controls: Search + Export -->
+            <div class="bg-white rounded-xl shadow-sm p-4 mb-4">
+                <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+                    <div class="flex-1 relative">
+                        <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0"/></svg>
+                        <input id="search-input" type="text" placeholder="חיפוש לפי שם, טלפון, עיר, ת.ז..." class="w-full pr-9 pl-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all">
+                    </div>
+                    <button id="export-btn" class="flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white font-semibold px-5 py-2.5 rounded-lg transition-colors text-sm whitespace-nowrap">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        ייצוא לאקסל
+                    </button>
+                    <button id="refresh-btn" class="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium px-4 py-2.5 rounded-lg transition-colors text-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        רענן
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                <div id="table-loading" class="flex items-center justify-center py-16"><div class="loader"></div></div>
+                <div id="table-empty" class="hidden text-center py-16 text-gray-400">
+                    <svg class="w-12 h-12 mx-auto mb-3 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    <p class="text-lg font-medium">אין נרשמים עדיין</p>
+                </div>
+                <div id="table-no-results" class="hidden text-center py-16 text-gray-400">
+                    <p class="text-lg font-medium">לא נמצאו תוצאות</p>
+                </div>
+                <div id="table-container" class="hidden">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-200">
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50">#</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap">תאריך</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap">שם מלא</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50">ת.ז.</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50">מין</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50">טלפון</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50">עיר</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50">איזור</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap">סוג רכב</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap">מ. רכב</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap">ת. לידה</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap">כלי חילוץ</th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50">הערות</th>
+                                <th class="px-4 py-3 bg-gray-50"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                    <div id="table-count" class="px-4 py-3 border-t border-gray-100 text-xs text-gray-400 text-left"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ TAB: אנליטיקה ══ -->
+        <div id="section-analytics" class="hidden">
+
+            <!-- Analytics Stats -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                <div class="stat-card bg-white rounded-xl shadow-sm p-4 text-center border-t-4 border-sky-500">
+                    <p class="text-3xl font-bold text-sky-600" id="a-today">-</p>
+                    <p class="text-xs text-gray-400 mt-0.5">ביקורים</p>
+                    <div class="mt-2 pt-2 border-t border-gray-100 flex items-center justify-center gap-1">
+                        <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        <span class="text-base font-bold text-sky-700" id="a-uniq-today">-</span>
+                        <span class="text-xs text-gray-400">ייחודיים</span>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-600 mt-1">היום</p>
+                </div>
+                <div class="stat-card bg-white rounded-xl shadow-sm p-4 text-center border-t-4 border-indigo-500">
+                    <p class="text-3xl font-bold text-indigo-600" id="a-week">-</p>
+                    <p class="text-xs text-gray-400 mt-0.5">ביקורים</p>
+                    <div class="mt-2 pt-2 border-t border-gray-100 flex items-center justify-center gap-1">
+                        <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        <span class="text-base font-bold text-indigo-700" id="a-uniq-week">-</span>
+                        <span class="text-xs text-gray-400">ייחודיים</span>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-600 mt-1">השבוע</p>
+                </div>
+                <div class="stat-card bg-white rounded-xl shadow-sm p-4 text-center border-t-4 border-violet-500">
+                    <p class="text-3xl font-bold text-violet-600" id="a-month">-</p>
+                    <p class="text-xs text-gray-400 mt-0.5">ביקורים</p>
+                    <div class="mt-2 pt-2 border-t border-gray-100 flex items-center justify-center gap-1">
+                        <svg class="w-3.5 h-3.5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        <span class="text-base font-bold text-violet-700" id="a-uniq-month">-</span>
+                        <span class="text-xs text-gray-400">ייחודיים</span>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-600 mt-1">החודש</p>
+                </div>
+                <div class="stat-card bg-white rounded-xl shadow-sm p-4 text-center border-t-4 border-fuchsia-500">
+                    <p class="text-3xl font-bold text-fuchsia-600" id="a-total">-</p>
+                    <p class="text-xs text-gray-400 mt-0.5">ביקורים</p>
+                    <div class="mt-2 pt-2 border-t border-gray-100 flex items-center justify-center gap-1">
+                        <svg class="w-3.5 h-3.5 text-fuchsia-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        <span class="text-base font-bold text-fuchsia-700" id="a-uniq-total">-</span>
+                        <span class="text-xs text-gray-400">ייחודיים</span>
+                    </div>
+                    <p class="text-sm font-semibold text-gray-600 mt-1">סה״כ</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+                <!-- Pages breakdown -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-5">
+                    <h3 class="font-bold text-gray-700 mb-4 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        ביקורים לפי עמוד
+                    </h3>
+                    <div id="a-pages" class="space-y-2.5"></div>
+                </div>
+
+                <!-- Device + Browser -->
+                <div class="space-y-4">
+                    <div class="bg-white rounded-xl shadow-sm p-5">
+                        <h3 class="font-bold text-gray-700 mb-3 text-sm">סוג מכשיר</h3>
+                        <div id="a-devices" class="space-y-2"></div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-5">
+                        <h3 class="font-bold text-gray-700 mb-3 text-sm">דפדפן</h3>
+                        <div id="a-browsers" class="space-y-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent visits -->
+            <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+                <div class="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+                    <h3 class="font-bold text-gray-700 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        ביקורים אחרונים
+                    </h3>
+                    <button onclick="loadAnalytics()" class="text-xs text-sky-600 hover:text-sky-800 font-medium">רענן</button>
+                </div>
+                <div id="a-loading" class="flex items-center justify-center py-12"><div class="loader"></div></div>
+                <div id="a-recent" class="hidden overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-100 text-xs text-gray-500 font-semibold uppercase tracking-wide">
+                                <th class="px-4 py-3 text-right">זמן</th>
+                                <th class="px-4 py-3 text-right">עמוד</th>
+                                <th class="px-4 py-3 text-right">IP</th>
+                                <th class="px-4 py-3 text-right">דפדפן</th>
+                                <th class="px-4 py-3 text-right">מכשיר</th>
+                                <th class="px-4 py-3 text-right">מקור</th>
+                            </tr>
+                        </thead>
+                        <tbody id="a-recent-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- Detail Modal -->
+<div id="detail-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <!-- Header -->
+        <div class="sticky top-0 bg-white px-6 pt-6 pb-4 border-b border-gray-100 flex items-center justify-between rounded-t-3xl">
+            <div>
+                <h3 class="text-xl font-black text-gray-800" id="detail-name">פרטי חבר</h3>
+                <p class="text-xs text-gray-400 mt-0.5" id="detail-date"></p>
+            </div>
+            <button onclick="closeDetailModal()" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <!-- Body -->
+        <div class="p-6 space-y-4" id="detail-body"></div>
+    </div>
+</div>
+
+<!-- Delete Confirm Modal -->
+<div id="delete-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50" id="delete-modal-overlay"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+        <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-gray-800 mb-2">מחיקת רשומה</h3>
+        <p class="text-gray-600 text-sm mb-6" id="delete-modal-name">האם אתה בטוח שברצונך למחוק את הרשומה?</p>
+        <div class="flex gap-3">
+            <button id="delete-cancel-btn" class="flex-1 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors">ביטול</button>
+            <button id="delete-confirm-btn" class="flex-1 py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition-colors">מחק</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let allSubmissions = [];
+let deleteTargetId = null;
+let searchTimeout = null;
+
+// ─── Tabs ─────────────────────────────────────────────────
+function switchTab(tab) {
+    document.getElementById('section-members').classList.toggle('hidden', tab !== 'members');
+    document.getElementById('section-analytics').classList.toggle('hidden', tab !== 'analytics');
+    document.getElementById('tab-members').className = tab === 'members'
+        ? 'tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-green-600 text-green-700 transition-colors flex items-center gap-2'
+        : 'tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-2';
+    document.getElementById('tab-analytics').className = tab === 'analytics'
+        ? 'tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-sky-600 text-sky-700 transition-colors flex items-center gap-2'
+        : 'tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-2';
+    if (tab === 'analytics') loadAnalytics();
+}
+
+// ─── Auth ────────────────────────────────────────────────
+
+async function checkAuth() {
+    try {
+        const res = await fetch('/api/admin/check');
+        const data = await res.json();
+        if (data.loggedIn) {
+            showDashboard();
+        }
+    } catch (e) {
+        // Stay on login
+    }
+}
+
+document.getElementById('login-btn').addEventListener('click', async () => {
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errEl = document.getElementById('login-error');
+    errEl.classList.add('hidden');
+
+    if (!username || !password) {
+        errEl.textContent = 'אנא הזן שם משתמש וסיסמא';
+        errEl.classList.remove('hidden');
+        return;
+    }
+
+    document.getElementById('login-btn').disabled = true;
+    document.getElementById('login-btn').textContent = 'מתחבר...';
+
+    try {
+        const res = await fetch('/api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+        if (data.success) {
+            showDashboard();
+        } else {
+            errEl.textContent = data.message || 'שם משתמש או סיסמא שגויים';
+            errEl.classList.remove('hidden');
+        }
+    } catch (e) {
+        errEl.textContent = 'שגיאת חיבור. נסה שוב.';
+        errEl.classList.remove('hidden');
+    }
+
+    document.getElementById('login-btn').disabled = false;
+    document.getElementById('login-btn').textContent = 'כניסה';
+});
+
+// Allow Enter key on password field
+document.getElementById('login-password').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') document.getElementById('login-btn').click();
+});
+
+document.getElementById('logout-btn').addEventListener('click', async () => {
+    await fetch('/api/admin/logout', { method: 'POST' });
+    document.getElementById('dashboard-section').classList.add('hidden');
+    document.getElementById('login-section').classList.remove('hidden');
+    document.getElementById('login-password').value = '';
+});
+
+// ─── Dashboard ────────────────────────────────────────────
+
+function showDashboard() {
+    document.getElementById('login-section').classList.add('hidden');
+    document.getElementById('dashboard-section').classList.remove('hidden');
+    loadStats();
+    loadSubmissions();
+}
+
+async function loadStats() {
+    try {
+        const res = await fetch('/api/admin/stats');
+        const s = await res.json();
+        document.getElementById('stat-total').textContent = s.total.toLocaleString();
+        document.getElementById('stat-today').textContent = s.today.toLocaleString();
+        document.getElementById('stat-month').textContent = s.thisMonth.toLocaleString();
+    } catch (e) {}
+}
+
+async function loadSubmissions(query = '') {
+    setTableState('loading');
+    try {
+        const url = query ? `/api/admin/submissions?q=${encodeURIComponent(query)}` : '/api/admin/submissions';
+        const res = await fetch(url);
+        allSubmissions = await res.json();
+        renderTable(allSubmissions);
+    } catch (e) {
+        setTableState('empty');
+    }
+}
+
+function renderTable(rows) {
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = '';
+
+    if (rows.length === 0) {
+        const query = document.getElementById('search-input').value.trim();
+        setTableState(query ? 'no-results' : 'empty');
+        return;
+    }
+
+    setTableState('data');
+    rows.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.className = 'border-b border-gray-100 cursor-pointer';
+        tr.title = 'לחץ לפרטים מלאים';
+        tr.addEventListener('click', (e) => {
+            if (e.target.closest('button')) return; // don't open if clicked delete btn
+            openDetailModal(r);
+        });
+        const dateStr = r.created_at ? r.created_at.split('T')[0] || r.created_at.split(' ')[0] : '';
+        const genderBadge = r.gender === 'זכר'
+            ? '<span class="badge bg-blue-100 text-blue-700">זכר</span>'
+            : r.gender === 'נקבה'
+            ? '<span class="badge bg-pink-100 text-pink-700">נקבה</span>'
+            : `<span class="badge bg-gray-100 text-gray-600">${r.gender || '-'}</span>`;
+
+        tr.innerHTML = `
+            <td class="px-4 py-3 text-gray-400 text-xs">${r.id}</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap text-xs">${dateStr}</td>
+            <td class="px-4 py-3 font-semibold text-gray-800 whitespace-nowrap">${r.first_name || ''} ${r.last_name || ''}</td>
+            <td class="px-4 py-3 text-gray-600 font-mono text-xs">${r.id_number || '-'}</td>
+            <td class="px-4 py-3">${genderBadge}</td>
+            <td class="px-4 py-3 text-gray-700 whitespace-nowrap font-mono text-xs">${r.phone || '-'}</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">${r.city || '-'}</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">${r.region || '-'}</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap text-xs">${r.vehicle_type || '-'}</td>
+            <td class="px-4 py-3 text-gray-600 font-mono text-xs">${r.vehicle_plate || '-'}</td>
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap text-xs">${r.birth_date || '-'}</td>
+            <td class="px-4 py-3 text-gray-600 text-xs max-w-[140px] truncate" title="${r.rescue_tools || ''}">${r.rescue_tools || '-'}</td>
+            <td class="px-4 py-3 text-gray-500 text-xs max-w-[120px] truncate" title="${r.notes || ''}">${r.notes || '-'}</td>
+            <td class="px-4 py-3">
+                <button onclick="openDeleteModal(${r.id}, '${(r.first_name + ' ' + r.last_name).replace(/'/g, "\\'")}')"
+                    class="text-red-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-lg transition-colors" title="מחק">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById('table-count').textContent = `מציג ${rows.length} רשומות`;
+}
+
+function setTableState(state) {
+    document.getElementById('table-loading').classList.toggle('hidden', state !== 'loading');
+    document.getElementById('table-empty').classList.toggle('hidden', state !== 'empty');
+    document.getElementById('table-no-results').classList.toggle('hidden', state !== 'no-results');
+    document.getElementById('table-container').classList.toggle('hidden', state !== 'data');
+}
+
+// ─── Search ───────────────────────────────────────────────
+
+document.getElementById('search-input').addEventListener('input', (e) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => loadSubmissions(e.target.value.trim()), 350);
+});
+
+// ─── Export ───────────────────────────────────────────────
+
+document.getElementById('export-btn').addEventListener('click', () => {
+    window.open('/api/admin/export', '_blank');
+});
+
+// ─── Refresh ─────────────────────────────────────────────
+
+document.getElementById('refresh-btn').addEventListener('click', () => {
+    const q = document.getElementById('search-input').value.trim();
+    loadStats();
+    loadSubmissions(q);
+});
+
+// ─── Delete Modal ─────────────────────────────────────────
+
+function openDeleteModal(id, name) {
+    deleteTargetId = id;
+    document.getElementById('delete-modal-name').textContent = `מחיקת הרשומה של ${name}. פעולה זו אינה הפיכה.`;
+    document.getElementById('delete-modal').classList.remove('hidden');
+}
+
+document.getElementById('delete-cancel-btn').addEventListener('click', closeDeleteModal);
+document.getElementById('delete-modal-overlay').addEventListener('click', (e) => {
+    // Modal doesn't close on overlay click (per policy)
+});
+
+function closeDeleteModal() {
+    document.getElementById('delete-modal').classList.add('hidden');
+    deleteTargetId = null;
+}
+
+document.getElementById('delete-confirm-btn').addEventListener('click', async () => {
+    if (!deleteTargetId) return;
+    const btn = document.getElementById('delete-confirm-btn');
+    btn.disabled = true;
+    btn.textContent = 'מוחק...';
+
+    try {
+        await fetch(`/api/admin/submissions/${deleteTargetId}`, { method: 'DELETE' });
+        closeDeleteModal();
+        loadStats();
+        const q = document.getElementById('search-input').value.trim();
+        loadSubmissions(q);
+    } catch (e) {
+        btn.textContent = 'שגיאה - נסה שוב';
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'מחק';
+});
+
+// ─── Analytics ────────────────────────────────────────────
+async function loadAnalytics() {
+    document.getElementById('a-loading').classList.remove('hidden');
+    document.getElementById('a-recent').classList.add('hidden');
+    try {
+        const res = await fetch('/api/admin/analytics');
+        const data = await res.json();
+
+        // Stats — visits
+        document.getElementById('a-today').textContent = data.stats.today.toLocaleString();
+        document.getElementById('a-week').textContent = data.stats.week.toLocaleString();
+        document.getElementById('a-month').textContent = data.stats.month.toLocaleString();
+        document.getElementById('a-total').textContent = data.stats.total.toLocaleString();
+        // Unique visitors
+        document.getElementById('a-uniq-today').textContent = (data.stats.uniqueToday || 0).toLocaleString();
+        document.getElementById('a-uniq-week').textContent = (data.stats.uniqueWeek || 0).toLocaleString();
+        document.getElementById('a-uniq-month').textContent = (data.stats.uniqueMonth || 0).toLocaleString();
+        document.getElementById('a-uniq-total').textContent = (data.stats.uniqueTotal || 0).toLocaleString();
+
+        // Pages
+        const maxVisits = data.pages[0]?.visits || 1;
+        document.getElementById('a-pages').innerHTML = data.pages.slice(0, 12).map(p => {
+            const pct = Math.round((p.visits / maxVisits) * 100);
+            const label = p.page.replace('.html', '') || 'index';
+            return `<div>
+                <div class="flex justify-between text-xs mb-1">
+                    <span class="font-medium text-gray-700">/${label}</span>
+                    <span class="text-gray-400">${p.visits} ביקורים · היום: ${p.today}</span>
+                </div>
+                <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-l from-sky-400 to-sky-600 rounded-full transition-all" style="width:${pct}%"></div>
+                </div>
+            </div>`;
+        }).join('');
+
+        // Devices
+        const totalDev = Object.values(data.devices).reduce((a,b)=>a+b,0) || 1;
+        document.getElementById('a-devices').innerHTML = Object.entries(data.devices)
+            .sort((a,b) => b[1]-a[1])
+            .map(([name, count]) => `
+                <div class="flex items-center gap-2 text-sm">
+                    <span class="text-base">${name === 'נייד' ? '📱' : name === 'טאבלט' ? '📋' : '🖥️'}</span>
+                    <span class="flex-1 text-gray-600">${name}</span>
+                    <span class="font-bold text-gray-800">${count}</span>
+                    <span class="text-xs text-gray-400">${Math.round(count/totalDev*100)}%</span>
+                </div>`).join('');
+
+        // Browsers
+        const totalBr = Object.values(data.browsers).reduce((a,b)=>a+b,0) || 1;
+        const brColors = { Chrome:'bg-yellow-400', Firefox:'bg-orange-400', Safari:'bg-blue-400', Edge:'bg-teal-400', אחר:'bg-gray-400' };
+        document.getElementById('a-browsers').innerHTML = Object.entries(data.browsers)
+            .sort((a,b) => b[1]-a[1])
+            .map(([name, count]) => `
+                <div class="flex items-center gap-2 text-sm">
+                    <div class="w-2.5 h-2.5 rounded-full flex-shrink-0 ${brColors[name] || 'bg-gray-400'}"></div>
+                    <span class="flex-1 text-gray-600">${name}</span>
+                    <span class="font-bold text-gray-800">${count}</span>
+                    <span class="text-xs text-gray-400">${Math.round(count/totalBr*100)}%</span>
+                </div>`).join('');
+
+        // Recent visits
+        const tbody = document.getElementById('a-recent-body');
+        tbody.innerHTML = data.recent.map(v => {
+            const dt = v.timestamp ? new Date(v.timestamp).toLocaleString('he-IL', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }) : '';
+            const ref = v.referrer ? (v.referrer.length > 30 ? v.referrer.slice(0,30)+'…' : v.referrer) : '—';
+            return `<tr class="border-b border-gray-50 hover:bg-gray-50 text-xs">
+                <td class="px-4 py-2.5 text-gray-500 whitespace-nowrap">${dt}</td>
+                <td class="px-4 py-2.5 font-medium text-gray-700">/${(v.page||'').replace('.html','')}</td>
+                <td class="px-4 py-2.5 text-gray-500 font-mono">${v.ip || '—'}</td>
+                <td class="px-4 py-2.5 text-gray-500">${v.browser || '—'}</td>
+                <td class="px-4 py-2.5 text-gray-500">${v.device || '—'}</td>
+                <td class="px-4 py-2.5 text-gray-400 max-w-[120px] truncate" title="${v.referrer || ''}">${ref}</td>
+            </tr>`;
+        }).join('');
+
+        document.getElementById('a-loading').classList.add('hidden');
+        document.getElementById('a-recent').classList.remove('hidden');
+    } catch (e) {
+        document.getElementById('a-loading').innerHTML = '<p class="text-gray-400 text-sm">שגיאה בטעינת נתונים</p>';
+    }
+}
+
+// ─── Detail Modal ──────────────────────────────────────────
+function openDetailModal(r) {
+    const dateStr = r.created_at ? new Date(r.created_at).toLocaleString('he-IL') : '';
+    document.getElementById('detail-name').textContent = `${r.first_name || ''} ${r.last_name || ''}`.trim();
+    document.getElementById('detail-date').textContent = `הצטרף/ה: ${dateStr} · מזהה: #${r.id}`;
+
+    const field = (label, value, icon='') => value
+        ? `<div class="flex gap-3 items-start">
+               <span class="text-lg flex-shrink-0 mt-0.5">${icon}</span>
+               <div>
+                   <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">${label}</p>
+                   <p class="text-sm font-medium text-gray-800 mt-0.5">${value}</p>
+               </div>
+           </div>`
+        : '';
+
+    const genderIcon = r.gender === 'זכר' ? '👨' : r.gender === 'נקבה' ? '👩' : '🧑';
+    const tools = r.rescue_tools || '—';
+    const termsIcon = r.terms_agreed ? '✅' : '❌';
+
+    document.getElementById('detail-body').innerHTML = `
+        <div class="grid grid-cols-2 gap-3">
+            ${field('שם פרטי', r.first_name, '👤')}
+            ${field('שם משפחה', r.last_name, '👤')}
+            ${field('תעודת זהות', r.id_number, '🪪')}
+            ${field('מין', r.gender, genderIcon)}
+            ${field('טלפון', r.phone ? `<a href="tel:${r.phone}" class="text-sky-600 underline">${r.phone}</a>` : '', '📞')}
+            ${field('תאריך לידה', r.birth_date, '🎂')}
+        </div>
+        <hr class="border-gray-100">
+        <div class="grid grid-cols-2 gap-3">
+            ${field('עיר מגורים', r.city, '🏘️')}
+            ${field('איזור קבוצה', r.region, '📍')}
+        </div>
+        <hr class="border-gray-100">
+        <div class="grid grid-cols-2 gap-3">
+            ${field('סוג רכב', r.vehicle_type, '🚙')}
+            ${field('מספר רכב', r.vehicle_plate, '🔢')}
+        </div>
+        ${r.occupation ? `<hr class="border-gray-100">${field('תחום עיסוק', r.occupation, '💼')}` : ''}
+        ${tools !== '—' ? `<hr class="border-gray-100"><div>${field('כלי חילוץ ברשותו', tools, '🔧')}</div>` : ''}
+        ${r.notes ? `<hr class="border-gray-100"><div class="flex gap-3 items-start"><span class="text-lg">📝</span><div><p class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-1">הערות</p><p class="text-sm text-gray-700 leading-relaxed bg-gray-50 rounded-xl p-3">${r.notes}</p></div></div>` : ''}
+        <hr class="border-gray-100">
+        ${field('אישור תקנון', r.terms_agreed ? 'אישר/ה' : 'לא אישר/ה', termsIcon)}
+        <div class="pt-2 flex gap-2">
+            <button onclick="closeDetailModal();openDeleteModal(${r.id},'${(r.first_name+' '+r.last_name).replace(/'/g,"\\'")}')"
+                class="flex items-center gap-1.5 text-sm text-red-500 hover:text-red-700 hover:bg-red-50 px-3 py-2 rounded-lg transition-colors font-medium">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                מחק רשומה
+            </button>
+        </div>`;
+
+    document.getElementById('detail-modal').classList.remove('hidden');
+}
+
+function closeDetailModal() {
+    document.getElementById('detail-modal').classList.add('hidden');
+}
+
+// ─── Init ─────────────────────────────────────────────────
+checkAuth();
+</script>
+</body>
+</html>

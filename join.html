@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הצטרפות לקבוצת ה-WhatsApp - תופעת טבע</title>
+    <meta name="description" content="הצטרפות לקבוצת הווטסאפ של תופעת טבע - קבוצה לעזרה ראשונה, טיולים, מפגשים ועוד.">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Region radio chips — selected state */
+        .region-chip input:checked + span {
+            background-color: #f0fdf4;
+            border-color: #16a34a;
+            color: #15803d;
+            font-weight: 700;
+            box-shadow: 0 0 0 3px rgba(22,163,74,.12);
+        }
+        /* Rescue tool card states — CSS fallback for reliability */
+        .rescue-card input:checked + .card-face {
+            border-color: #16a34a;
+            background-color: #f0fdf4;
+            box-shadow: 0 0 0 3px rgba(22,163,74,.12);
+        }
+        .rescue-card input:checked ~ .check-badge {
+            opacity: 1;
+            transform: scale(1);
+        }
+        /* Hero — sky blue gradient */
+        .hero-bg {
+            background: linear-gradient(150deg, #0c4a6e 0%, #0369a1 35%, #0284c7 65%, #22d3ee 100%);
+        }
+        /* Dot grid texture */
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Decorative blobs */
+        .hero-blob-1 {
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.07);
+            pointer-events: none;
+        }
+        .hero-blob-2 {
+            position: absolute;
+            bottom: 60px;
+            left: -100px;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.05);
+            pointer-events: none;
+        }
+        .hero-blob-3 {
+            position: absolute;
+            top: 40%;
+            left: 60%;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.04);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="font-heebo bg-white text-gray-800">
+
+    <!-- Skip to content -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:z-[200] focus:bg-white focus:px-4 focus:py-2 focus:rounded focus:shadow focus:text-blue-600 focus:font-bold">דלג לתוכן הראשי</a>
+
+    <!-- ══════════════ HEADER ══════════════ -->
+    <header class="bg-white shadow-sm z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex flex-col items-center text-center">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="תופעת טבע לוגו" class="w-32 h-32 object-contain">
+                </a>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-700 mt-2">ע״מ ״הטבע זה הבית״</h1>
+                <p class="text-gray-500 text-sm">בהתנדבות מלאה</p>
+                <p class="text-xl font-bold text-gray-600 mt-1" dir="ltr">1700-707-609</p>
+                <p class="text-sm text-gray-500">חילוצים 24/7</p>
+                <p class="text-xs text-gray-600 mt-1">לע״נ ירדנה רצון</p>
+            </div>
+
+            <nav class="mt-4 border-t pt-3" aria-label="תפריט ראשי">
+                <button id="mobile-menu-btn" class="md:hidden w-full flex items-center justify-center gap-2 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <span class="text-sm font-medium">תפריט</span>
+                </button>
+                <div class="hidden md:flex flex-wrap justify-center gap-6 text-base">
+                    <a href="index.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">דף הבית</a>
+                    <a href="join.html" class="nav-link active px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600 font-medium">הצטרפות למשפחה</a>
+                    <a href="needhelp.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">זקוק לחילוץ</a>
+                    <a href="offroad.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">הדרכת חילוץ ונהיגת שטח</a>
+                    <div class="relative group">
+                        <button class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600 flex items-center gap-1" aria-haspopup="true" aria-expanded="false">
+                            עוד
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full right-0 bg-white shadow-lg rounded-md py-2 min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <a href="faq.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">שאלות ומידע</a>
+                            <a href="gallery.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">נפלאות הטבע</a>
+                            <a href="about.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">עלינו</a>
+                            <a href="contact.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">צור קשר</a>
+                            <hr class="my-1 border-gray-100">
+                            <a href="terms.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">תקנון</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ══════════════ MAIN ══════════════ -->
+    <main id="main-content">
+
+        <!-- ── HERO ──────────────────────────────────────────────── -->
+        <section class="hero-bg relative overflow-hidden" style="padding-top:3.5rem;padding-bottom:6rem">
+
+            <!-- Decorative blobs -->
+            <div class="hero-blob-1"></div>
+            <div class="hero-blob-2"></div>
+            <div class="hero-blob-3"></div>
+
+            <div class="relative z-10 max-w-2xl mx-auto px-6 text-center">
+
+                <!-- Logo — ring highlight -->
+                <div class="mb-6 flex justify-center">
+                    <div style="width:108px;height:108px;border-radius:50%;border:3px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(0,0,0,.25);padding:6px">
+                        <div style="width:100%;height:100%;border-radius:50%;background:#ffffff;overflow:hidden;display:flex;align-items:center;justify-content:center">
+                            <img src="images/logo.png" alt="תופעת טבע" style="width:84px;height:84px;object-fit:contain">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Eyebrow label -->
+                <p style="font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:.85rem">
+                    ע״מ "הטבע זה הבית" · בהתנדבות מלאה
+                </p>
+
+                <!-- Main heading -->
+                <h2 style="font-size:clamp(2.1rem,5vw,3.2rem);font-weight:900;color:#ffffff;line-height:1.18;margin-bottom:1.1rem;text-shadow:0 2px 16px rgba(0,0,0,.15)">
+                    הצטרפות למשפחת<br>
+                    <span style="color:#fde68a">תופעת טבע</span>
+                </h2>
+
+                <!-- Sub text -->
+                <p style="font-size:.97rem;line-height:1.8;color:rgba(255,255,255,.82);max-width:34rem;margin:0 auto 2rem">
+                    כולם יכולים לקחת חלק במשפחה ללא תנאים —
+                    אלפי חברים מכל צבעי הקשת, בכל מקום בארץ וביקום.
+                    <strong style="color:#fde68a;font-weight:600">הכל בהתנדבות מלאה ❤️</strong>
+                </p>
+
+                <!-- Activity tags — pill chips -->
+                <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:2rem">
+                    <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.35rem 1rem;border-radius:9999px;font-size:.8rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);backdrop-filter:blur(4px)">🚙 טיולים</span>
+                    <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.35rem 1rem;border-radius:9999px;font-size:.8rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);backdrop-filter:blur(4px)">🔧 חילוצים</span>
+                    <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.35rem 1rem;border-radius:9999px;font-size:.8rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);backdrop-filter:blur(4px)">🌴 שיקום הטבע</span>
+                    <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.35rem 1rem;border-radius:9999px;font-size:.8rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);backdrop-filter:blur(4px)">🎉 מפגשים</span>
+                    <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.35rem 1rem;border-radius:9999px;font-size:.8rem;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);backdrop-filter:blur(4px)">🔍 איתור נעדרים</span>
+                    <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.35rem 1rem;border-radius:9999px;font-size:.8rem;background:rgba(253,230,138,.15);border:1px solid rgba(253,230,138,.4);color:#fde68a;backdrop-filter:blur(4px)">❤️ אהבה משפחתית</span>
+                </div>
+
+                <!-- Phone CTA -->
+                <a href="tel:1700707609"
+                   class="inline-flex items-center gap-2.5 transition-all hover:scale-105 hover:shadow-xl"
+                   style="background:rgba(255,255,255,.95);color:#0c4a6e;font-weight:700;font-size:1.05rem;padding:.85rem 2rem;border-radius:9999px;box-shadow:0 4px 24px rgba(0,0,0,.25);text-decoration:none">
+                    <svg class="w-5 h-5 flex-shrink-0" style="color:#0369a1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <span dir="ltr">1700-707-609</span>
+                    <span style="font-size:.8rem;font-weight:400;color:#0369a1;opacity:.7">· 24/7</span>
+                </a>
+
+            </div>
+
+            <!-- Wave divider -->
+            <div style="position:absolute;bottom:0;left:0;right:0;line-height:0;pointer-events:none">
+                <svg viewBox="0 0 1440 72" preserveAspectRatio="none" style="display:block;width:100%;height:72px" fill="white">
+                    <path d="M0,36 C180,72 360,0 540,36 C720,72 900,0 1080,36 C1260,72 1350,18 1440,36 L1440,72 L0,72 Z"/>
+                </svg>
+            </div>
+
+        </section>
+
+        <!-- ── FLOATING FORM CARD ──────────────────────────────── -->
+        <div class="relative z-10 -mt-20 pb-16">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="bg-white rounded-3xl overflow-hidden" style="box-shadow:0 20px 60px rgba(15,23,42,.18)">
+
+                    <!-- Card header strip -->
+                    <div class="px-8 py-5 text-white text-center" style="background:linear-gradient(135deg,#0c4a6e,#0284c7);border-bottom:1px solid rgba(255,255,255,.1)">
+                        <div class="flex items-center justify-center gap-2.5">
+                            <svg class="w-6 h-6 opacity-80 flex-shrink-0" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            <div>
+                                <p class="font-black text-lg leading-none">מילוי פרטים להצטרפות</p>
+                                <p class="text-white/70 text-xs mt-0.5">שדות עם <span class="text-red-300">*</span> הם חובה</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form body -->
+                    <div id="join-form-container" class="p-6 lg:p-8">
+                        <form id="join-form" novalidate class="space-y-4">
+
+                            <!-- ─── 1. פרטים אישיים ─────────────────── -->
+                            <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100">
+                                <div class="flex items-center gap-2.5 mb-4 pb-3 border-b border-gray-200">
+                                    <span class="w-6 h-6 rounded-full bg-green-600 text-white text-xs font-black flex items-center justify-center flex-shrink-0">1</span>
+                                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest">פרטים אישיים</h3>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">שם פרטי <span class="text-red-500">*</span></label>
+                                        <input type="text" name="first_name" required placeholder="ישראל"
+                                            class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">שם משפחה <span class="text-red-500">*</span></label>
+                                        <input type="text" name="last_name" required placeholder="ישראלי"
+                                            class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">תעודת זהות <span class="text-red-500">*</span></label>
+                                        <input type="text" name="id_number" required placeholder="000000000" maxlength="9" inputmode="numeric"
+                                            class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">מין <span class="text-red-500">*</span></label>
+                                        <select name="gender" required
+                                            class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all text-sm cursor-pointer">
+                                            <option value="">בחר/י...</option>
+                                            <option>זכר</option>
+                                            <option>נקבה</option>
+                                            <option>אחר</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">מספר פלאפון <span class="text-red-500">*</span></label>
+                                        <input type="tel" name="phone" required placeholder="050-0000000"
+                                            class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">תאריך לידה <span class="text-red-500">*</span></label>
+                                        <input type="date" name="birth_date" required
+                                            class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ─── 2. מיקום ───────────────────────── -->
+                            <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100">
+                                <div class="flex items-center gap-2.5 mb-4 pb-3 border-b border-gray-200">
+                                    <span class="w-6 h-6 rounded-full bg-green-600 text-white text-xs font-black flex items-center justify-center flex-shrink-0">2</span>
+                                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest">מיקום</h3>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">עיר מגורים <span class="text-red-500">*</span></label>
+                                    <input type="text" name="city" required placeholder="תל אביב"
+                                        class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2.5">איזור קבוצה משפחתית <span class="text-red-500">*</span></label>
+                                    <div class="flex flex-wrap gap-2" id="region-chips">
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="צפון" class="sr-only" required>
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🏔️ צפון</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="עכו נהריה והסביבה" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">⚓ עכו נהריה והסביבה</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="חיפה והקריות" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🏭 חיפה והקריות</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="עפולה והעמקים" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🌾 עפולה והעמקים</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="השרון" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🌿 השרון</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="מישור החוף" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🌊 מישור החוף</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="מרכז" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🏙️ מרכז</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="מודיעין" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🏘️ מודיעין</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="ירושלים והסביבה" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🕍 ירושלים והסביבה</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="יהודה ושומרון" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🗺️ יהודה ושומרון</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="דרום" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🏜️ דרום</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="נגב והערבה" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🌵 נגב והערבה</span>
+                                        </label>
+                                        <label class="region-chip cursor-pointer">
+                                            <input type="radio" name="region" value="אילת" class="sr-only">
+                                            <span class="block px-3.5 py-1.5 rounded-full border-2 border-gray-200 bg-white text-sm font-medium text-gray-600 transition-all duration-150 hover:border-green-400 hover:text-green-700 hover:bg-green-50 select-none">🐠 אילת</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ─── 3. פרטי רכב ─────────────────────── -->
+                            <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100">
+                                <div class="flex items-center gap-2.5 mb-4 pb-3 border-b border-gray-200">
+                                    <span class="w-6 h-6 rounded-full bg-green-600 text-white text-xs font-black flex items-center justify-center flex-shrink-0">3</span>
+                                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest">פרטי רכב</h3>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">
+                                            סוג רכב <span class="text-red-500">*</span>
+                                            <span class="text-gray-400 font-normal normal-case">(לא חובה ג'יפ)</span>
+                                        </label>
+                                        <input type="text" name="vehicle_type" required placeholder="פג'ו, טויוטה, מאזדה..."
+                                            class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">מספר רכב <span class="text-red-500">*</span></label>
+                                        <input type="text" name="vehicle_plate" required placeholder="00-000-00"
+                                            class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ─── 4. מידע נוסף ────────────────────── -->
+                            <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100">
+                                <div class="flex items-center gap-2.5 mb-4 pb-3 border-b border-gray-200">
+                                    <span class="w-6 h-6 rounded-full bg-gray-300 text-gray-600 text-xs font-black flex items-center justify-center flex-shrink-0">4</span>
+                                    <h3 class="text-sm font-bold text-gray-500 uppercase tracking-widest">מידע נוסף</h3>
+                                    <span class="text-xs text-gray-400 font-normal">(רשות)</span>
+                                </div>
+
+                                <!-- תחום עיסוק -->
+                                <div class="mb-5">
+                                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">תחום עיסוק</label>
+                                    <input type="text" name="occupation" placeholder="רופא, מהנדס, מורה..."
+                                        class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all text-sm">
+                                </div>
+
+                                <!-- ── כלי חילוץ ── -->
+                                <div class="mb-5">
+                                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-3">
+                                        כלי חילוץ שברשותי
+                                        <span class="text-gray-400 font-normal normal-case">(ניתן לסמן כמה)</span>
+                                    </label>
+                                    <div class="grid grid-cols-3 gap-2.5">
+
+                                        <label class="rescue-card cursor-pointer select-none relative block">
+                                            <input type="checkbox" name="rescue_tools" value="רצועת חילוץ" class="sr-only peer">
+                                            <div class="card-face border-2 border-gray-200 bg-white rounded-2xl p-3 text-center transition-all duration-150 hover:border-green-300 hover:bg-green-50/50 peer-checked:border-green-500 peer-checked:bg-green-50">
+                                                <span class="text-2xl block mb-1.5">🔗</span>
+                                                <p class="text-xs font-bold text-gray-700 leading-tight">רצועת<br>חילוץ</p>
+                                            </div>
+                                            <span class="check-badge absolute top-1.5 start-1.5 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-150 peer-checked:opacity-100 peer-checked:scale-100" aria-hidden="true">
+                                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                            </span>
+                                        </label>
+
+                                        <label class="rescue-card cursor-pointer select-none relative block">
+                                            <input type="checkbox" name="rescue_tools" value="כבלים להתנעה" class="sr-only peer">
+                                            <div class="card-face border-2 border-gray-200 bg-white rounded-2xl p-3 text-center transition-all duration-150 hover:border-green-300 hover:bg-green-50/50 peer-checked:border-green-500 peer-checked:bg-green-50">
+                                                <span class="text-2xl block mb-1.5">⚡</span>
+                                                <p class="text-xs font-bold text-gray-700 leading-tight">כבלים<br>להתנעה</p>
+                                            </div>
+                                            <span class="check-badge absolute top-1.5 start-1.5 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-150 peer-checked:opacity-100 peer-checked:scale-100" aria-hidden="true">
+                                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                            </span>
+                                        </label>
+
+                                        <label class="rescue-card cursor-pointer select-none relative block">
+                                            <input type="checkbox" name="rescue_tools" value="כננת" class="sr-only peer">
+                                            <div class="card-face border-2 border-gray-200 bg-white rounded-2xl p-3 text-center transition-all duration-150 hover:border-green-300 hover:bg-green-50/50 peer-checked:border-green-500 peer-checked:bg-green-50">
+                                                <span class="text-2xl block mb-1.5">🔩</span>
+                                                <p class="text-xs font-bold text-gray-700 leading-tight">כננת</p>
+                                            </div>
+                                            <span class="check-badge absolute top-1.5 start-1.5 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-150 peer-checked:opacity-100 peer-checked:scale-100" aria-hidden="true">
+                                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                            </span>
+                                        </label>
+
+                                        <label class="rescue-card cursor-pointer select-none relative block">
+                                            <input type="checkbox" name="rescue_tools" value="קומפרסור" class="sr-only peer">
+                                            <div class="card-face border-2 border-gray-200 bg-white rounded-2xl p-3 text-center transition-all duration-150 hover:border-green-300 hover:bg-green-50/50 peer-checked:border-green-500 peer-checked:bg-green-50">
+                                                <span class="text-2xl block mb-1.5">💨</span>
+                                                <p class="text-xs font-bold text-gray-700 leading-tight">קומפרסור</p>
+                                            </div>
+                                            <span class="check-badge absolute top-1.5 start-1.5 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-150 peer-checked:opacity-100 peer-checked:scale-100" aria-hidden="true">
+                                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                            </span>
+                                        </label>
+
+                                        <label class="rescue-card cursor-pointer select-none relative block col-span-2">
+                                            <input type="checkbox" name="rescue_tools" value="אחר" class="sr-only peer">
+                                            <div class="card-face border-2 border-gray-200 bg-white rounded-2xl p-3 text-center transition-all duration-150 hover:border-green-300 hover:bg-green-50/50 peer-checked:border-green-500 peer-checked:bg-green-50">
+                                                <span class="text-2xl block mb-1.5">➕</span>
+                                                <p class="text-xs font-bold text-gray-700">אחר</p>
+                                            </div>
+                                            <span class="check-badge absolute top-1.5 start-1.5 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-150 peer-checked:opacity-100 peer-checked:scale-100" aria-hidden="true">
+                                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                            </span>
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                                <!-- הערות -->
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1.5">הערות כלליות</label>
+                                    <textarea name="notes" rows="3" placeholder="כל מידע נוסף שתרצו לשתף..."
+                                        class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-800 text-sm resize-none focus:border-green-500 focus:ring-2 focus:ring-green-100 outline-none transition-all"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- ─── תקנון ───────────────────────────── -->
+                            <div class="bg-amber-50 rounded-2xl p-5 border border-amber-200">
+                                <label class="flex items-start gap-3.5 cursor-pointer">
+                                    <input type="checkbox" name="terms_agreed" id="terms_agreed" required
+                                        class="w-5 h-5 mt-0.5 flex-shrink-0 rounded cursor-pointer"
+                                        style="accent-color: #15803d;">
+                                    <div>
+                                        <p class="text-sm font-bold text-gray-800 mb-0.5">
+                                            <span class="text-red-500">*</span> אישור תקנון התופעה
+                                        </p>
+                                        <p class="text-sm text-gray-600 leading-relaxed">
+                                            קראתי ואני מאשר/ת את
+                                            <a href="terms.html" target="_blank" rel="noopener"
+                                                class="text-green-700 underline font-semibold hover:text-green-800">תקנון התופעה</a>.
+                                            הפרטים ישמרו במאגר פרטי וחסוי ויהיו זמינים רק לצוות תופעת טבע.
+                                        </p>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Error -->
+                            <div id="error-message" class="hidden p-4 bg-red-50 border border-red-200 rounded-2xl text-red-700 text-sm text-center font-medium">
+                                ⚠️ אירעה שגיאה בשליחת הטופס. אנא נסו שוב מאוחר יותר.
+                            </div>
+
+                            <!-- Submit -->
+                            <button id="submit-btn" type="submit"
+                                class="w-full text-white font-black py-4 px-6 rounded-2xl text-lg transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:translate-y-0"
+                                style="background:linear-gradient(135deg,#15803d,#16a34a,#22c55e);box-shadow:0 4px 20px rgba(22,163,74,.35)">
+                                <svg class="w-5 h-5 flex-shrink-0" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                <span id="submit-text">שלח/י טופס והצטרף/י למשפחה!</span>
+                            </button>
+
+                            <p class="text-center text-xs text-gray-400 pb-2">
+                                בהגשת הטופס את/ה מאשר/ת את שמירת הפרטים במאגר הפרטי של תופעת טבע
+                            </p>
+
+                        </form>
+                    </div>
+
+                    <!-- ── הודעת הצלחה ── -->
+                    <div id="success-message" class="hidden">
+                        <div class="px-8 py-16 text-center">
+                            <div class="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-5 shadow-lg shadow-green-200">
+                                <svg class="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-gray-800 mb-3">הטופס נשלח בהצלחה! 🎉</h3>
+                            <p class="text-gray-600 text-lg leading-relaxed">תודה שהצטרפת למשפחת תופעת טבע!<br>נוסיף אותך לקבוצה בהקדם.</p>
+                            <a href="index.html"
+                                class="inline-block mt-8 text-white font-bold px-10 py-3.5 rounded-2xl transition-all hover:-translate-y-0.5"
+                                style="background:linear-gradient(135deg,#15803d,#16a34a);box-shadow:0 4px 16px rgba(22,163,74,.3)">
+                                חזרה לדף הבית
+                            </a>
+                        </div>
+                    </div>
+
+                </div><!-- /card -->
+            </div>
+        </div><!-- /floating card wrapper -->
+
+        <!-- ══════════════ FOOTER ══════════════ -->
+        <footer class="bg-gray-100 border-t">
+            <div class="max-w-6xl mx-auto px-4 py-10">
+                <div class="grid md:grid-cols-3 gap-8 items-center text-center">
+                    <div class="md:text-right order-3 md:order-1">
+                        <p class="text-gray-700 leading-relaxed">
+                            משפחת תופעת טבע מונה אלפי חברים מכל צבעי הקשת הנמצאים בכל מקום בארץ וביקום ללא הבדל מין, גזע ודת.
+                        </p>
+                        <p class="text-gray-700 mt-2 font-medium">הכל בהתנדבות מלאה עם המון אהבה</p>
+                        <p class="text-gray-700">24/7 שעות ביממה.</p>
+                    </div>
+                    <div class="flex justify-center order-1 md:order-2">
+                        <img src="images/logo.png" alt="תופעת טבע" class="w-28 h-28 object-contain drop-shadow-md">
+                    </div>
+                    <div class="flex justify-center md:justify-end gap-4 order-2 md:order-3">
+                        <a href="https://www.youtube.com/channel/UCxxxxxxx" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="ערוץ יוטיוב">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/tofaat_teva/" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="אינסטגרם">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="https://www.facebook.com/TofaatTeva" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="פייסבוק">
+                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-8 pt-6 border-t text-center text-gray-600 text-sm">
+                    <p>&copy; 2018 by Noy Jakubovits. Tofaat-teva.co.il</p>
+                    <p>בהתנדבות מלאה ט.ל.ח</p>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- ══════════════ MOBILE MENU ══════════════ -->
+    <div id="mobile-menu" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-label="תפריט ניווט">
+        <div class="absolute inset-0 bg-black/50" id="mobile-menu-overlay"></div>
+        <div class="absolute top-0 right-0 w-72 h-full bg-white shadow-xl overflow-y-auto">
+            <div class="flex items-center justify-between p-4 border-b">
+                <span class="text-lg font-bold text-gray-700">תפריט</span>
+                <button id="mobile-menu-close" class="p-2 rounded-md hover:bg-gray-100" aria-label="סגור תפריט">
+                    <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <nav class="py-2" aria-label="תפריט ניווט נייד">
+                <a href="index.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">דף הבית</a>
+                <a href="join.html" class="block px-6 py-3 text-green-700 hover:bg-gray-50 font-bold border-b border-gray-100">הצטרפות למשפחה</a>
+                <a href="needhelp.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">זקוק לחילוץ</a>
+                <a href="offroad.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">הדרכת חילוץ ונהיגת שטח</a>
+                <a href="faq.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">שאלות ומידע</a>
+                <a href="gallery.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">נפלאות הטבע</a>
+                <a href="about.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">עלינו</a>
+                <a href="contact.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">צור קשר</a>
+                <a href="terms.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50">תקנון</a>
+            </nav>
+            <div class="p-4 border-t">
+                <a href="tel:1700707609" class="flex items-center justify-center gap-2 bg-green-700 text-white py-3 rounded-xl font-bold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <span dir="ltr">1700-707-609</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/join-form.js"></script>
+<script>
+(function(){try{var vid=localStorage.getItem('_tv_vid');if(!vid){vid=([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,function(c){return(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16)});localStorage.setItem('_tv_vid',vid);}fetch('/api/track',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname.split('/').pop()||'index.html',referrer:document.referrer,title:document.title,vid:vid})});}catch(e){}})();
+</script>
+</body>
+</html>
+

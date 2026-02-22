@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הדרכת חילוץ ונהיגת שטח - תופעת טבע</title>
+    <meta name="description" content="הדרכת חילוץ ונהיגת שטח - כללים, טיפים וציוד מומלץ לנהיגה בטוחה בשטח. תופעת טבע.">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="font-heebo bg-white text-gray-800">
+    <!-- Skip to content -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:z-[200] focus:bg-white focus:px-4 focus:py-2 focus:rounded focus:shadow focus:text-blue-600 focus:font-bold">דלג לתוכן הראשי</a>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex flex-col items-center text-center">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="תופעת טבע לוגו" class="w-32 h-32 object-contain">
+                </a>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-700 mt-2">ע״מ ״הטבע זה הבית״</h1>
+                <p class="text-gray-500 text-sm">בהתנדבות מלאה</p>
+                <p class="text-xl font-bold text-gray-600 mt-1" dir="ltr">1700-707-609</p>
+                <p class="text-sm text-gray-500">חילוצים 24/7</p>
+                <p class="text-xs text-gray-600 mt-1">לע״נ ירדנה רצון</p>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="mt-4 border-t pt-3" aria-label="תפריט ראשי">
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden w-full flex items-center justify-center gap-2 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <span class="text-sm font-medium">תפריט</span>
+                </button>
+                <!-- Desktop nav -->
+                <div class="hidden md:flex flex-wrap justify-center gap-6 text-base">
+                    <a href="index.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">דף הבית</a>
+                    <a href="join.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">הצטרפות למשפחה</a>
+                    <a href="needhelp.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">זקוק לחילוץ</a>
+                    <a href="offroad.html" class="nav-link active px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600 font-medium">הדרכת חילוץ ונהיגת שטח</a>
+                    <div class="relative group">
+                        <button class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600 flex items-center gap-1" aria-haspopup="true" aria-expanded="false">
+                            עוד
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full right-0 bg-white shadow-lg rounded-md py-2 min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <a href="faq.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">שאלות ומידע</a>
+                            <a href="gallery.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">נפלאות הטבע</a>
+                            <a href="about.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">עלינו</a>
+                            <a href="contact.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">צור קשר</a>
+                            <hr class="my-1 border-gray-100">
+                            <a href="terms.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">תקנון</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+<main id="main-content">
+
+    <!-- Banner Image -->
+    <section class="relative h-[40vh] min-h-[250px] overflow-hidden">
+        <img src="images/hero-jeep.jpg" alt="נהיגת שטח" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="relative z-10 flex items-center justify-center h-full">
+            <h2 class="text-4xl md:text-5xl font-bold text-white drop-shadow-lg text-center px-4">הדרכת חילוץ ונהיגת שטח</h2>
+        </div>
+    </section>
+
+    <!-- Section 1: הדרכת חילוץ -->
+    <article class="py-12 md:py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-700">הדרכת חילוץ</h2>
+            </div>
+
+            <!-- Cards Grid - 2 columns -->
+            <div class="grid md:grid-cols-2 gap-5 mb-8">
+                <div class="bg-gray-50 rounded-xl p-5 border border-gray-200 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                        <h3 class="font-bold text-gray-700">הירגעו וחשבו</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">כשמגיעים לחילוץ, יש להירגע ולחשוב טוב מהו החילוץ האידיאלי, ושאין שפ"צ או כל גורם סכנה.</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-5 border border-gray-200 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">2</span>
+                        <h3 class="font-bold text-gray-700">ללא אגו</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">אם החילוץ מרגיש גדול עליכם, עדיף לא לגעת. לסמוך על האינטואיציה האישית - בשטח לא באים עם אגו, צניעות!</p>
+                </div>
+            </div>
+
+            <!-- Insurance highlight box -->
+            <div class="bg-blue-50 rounded-xl p-6 border border-blue-200 mb-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-blue-800 text-lg mb-2">3. לצרכי ביטוח</h3>
+                        <p class="text-blue-700 leading-relaxed">הדבר היחידי שתופס בביטוח ובבתי משפט למניעת תביעה מבעל הרכב המחולץ הוא צילום של בעל הרכב המחולץ כאשר הוא מחבר בעצמו את השאקל/הרצועה לרכבו שלו.</p>
+                        <p class="text-blue-600 mt-2 text-sm">ניתן להנחות אותו מילולית כיצד לעשות זאת - העיקר שיעשה בעצמו ושיהיה תיעוד לכך. כך לקח אחריות לחילוץ ולכל נזק שעלול להיגרם.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Safety warning -->
+            <div class="bg-red-50 border-2 border-red-200 rounded-xl p-5 mb-6">
+                <div class="flex items-center gap-3 mb-2">
+                    <svg class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                    <h3 class="font-bold text-red-800 text-lg">4. בטיחות!</h3>
+                </div>
+                <p class="text-red-700 font-medium text-lg">יש להתרחק מכבלי החילוץ לפחות 8 מטר.</p>
+            </div>
+
+            <!-- Remaining rescue rules in clean list -->
+            <div class="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100">
+                <div class="p-5 flex gap-4 items-start">
+                    <span class="w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">5</span>
+                    <p class="text-gray-600 leading-relaxed">שאקל תקני חייב להיות <strong>בצורת אומגה ולא U!</strong></p>
+                </div>
+                <div class="p-5 flex gap-4 items-start">
+                    <span class="w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">6</span>
+                    <p class="text-gray-600 leading-relaxed">גלגלים ברכב המחולץ עדיף שיהיו מיושרים לכיוון הרכב המחלץ, כדי להקל על המשיכה.</p>
+                </div>
+                <div class="p-5 flex gap-4 items-start">
+                    <span class="w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">7</span>
+                    <p class="text-gray-600 leading-relaxed">רכב מחולץ בחול רך לא ילחץ גז בתחילת החילוץ - לחיצת גז מצדו רק תחפור יותר. המחולץ מתחיל ללחוץ גז רק ברגע שרכבו התחיל בתנועה קלה של התקדמות.</p>
+                </div>
+                <div class="p-5 flex gap-4 items-start">
+                    <span class="w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">8</span>
+                    <p class="text-gray-600 leading-relaxed">קשירת רכב עדיף שתיעשה מטבעות הקשירה הייעודיות ברכב, ולא מתפוח וו הגרירה.</p>
+                </div>
+                <div class="p-5 flex gap-4 items-start">
+                    <span class="w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">9</span>
+                    <p class="text-gray-600 leading-relaxed">סגירת שאקל אף פעם לא תהיה סגירה הרמטית - מבריגים עד הסוף ואז <strong>חצי סיבוב אחורה</strong>, כדי למנוע מצב של היצמדות הבורג לאומגה. אחרת, השאקל עלול להישבר בלחץ מסוים.</p>
+                </div>
+                <div class="p-5 flex gap-4 items-start">
+                    <span class="w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">10</span>
+                    <p class="text-gray-600 leading-relaxed">חילוץ בחול רך עדיף שלא ייעשה כאשר שני רכבים עומדים פנים אל מול פנים (מנוע מול מנוע) - מנוע הרכב כבד ומושך את החלק הקדמי למטה, וכך מנטרל את הכוח מהגלגלים האחוריים.</p>
+                </div>
+                <div class="p-5 flex gap-4 items-start">
+                    <span class="w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">11</span>
+                    <p class="text-gray-600 leading-relaxed">בתחילת חילוץ יש למתוח את הכבל ולנסות להתחיל כאשר הוא מתוח. במידה ונדרש יותר כוח, יש לקחת תנופה למכה קלה - מטר פחות ממצב מתוח.</p>
+                </div>
+                <div class="p-5 flex gap-4 items-start">
+                    <span class="w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">12</span>
+                    <p class="text-gray-600 leading-relaxed">לא מורידים אוויר בחולות לרכב מחולץ לצורך החילוץ (במידה ולא הוריד). כשמסתיים החילוץ, אם יש נסיעה נוספת בחולות, יש להוריד לרכב המחולץ אוויר שלא ישקע שוב.</p>
+                </div>
+                <div class="p-5 flex gap-4 items-start">
+                    <span class="w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">13</span>
+                    <p class="text-gray-600 leading-relaxed">קשירת רכב במקום אחר חוץ מטבעות הקשירה הייעודיות תתבצע רק במידה ואין ברירה אחרת, ואפשרית לשאסי בחניקה - עדיף משתי נקודות.</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Section 2: שיפוע צד -->
+    <section class="py-12 md:py-16 bg-amber-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-14 h-14 bg-amber-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-700">במידה ויש שיפוע צד</h2>
+                    <p class="text-amber-700 font-medium">דורש זהירות מיוחדת!</p>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-5">
+                <div class="bg-white rounded-xl p-5 border border-amber-200 shadow-sm">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-8 h-8 bg-amber-600 text-white rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                        <h3 class="font-bold text-gray-700">עצרו ובחנו</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">יש לעצור ולבחון טוב - לקחת את הזמן. יש לבחון איך ניתן לקשור את הרכב בצורה אופטימלית.</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-amber-200 shadow-sm">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-8 h-8 bg-amber-600 text-white rounded-full flex items-center justify-center font-bold text-sm">2</span>
+                        <h3 class="font-bold text-gray-700">סכנת התהפכות</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">אם יש סיכוי הכי קל להתהפכות - נועלים הגה לכיוון הרצוי ולא נותנים לבן אדם לשבת בכיסא הנהג.</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-amber-200 shadow-sm md:col-span-2">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-8 h-8 bg-amber-600 text-white rounded-full flex items-center justify-center font-bold text-sm">3</span>
+                        <h3 class="font-bold text-gray-700">עיגון מהצד</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">אם הכרחי, ניתן לעגן מהשאסי בחניקה. ניתן גם לעגן מסביב לקורת הרכב (שמחברת בין דלת הנהג לדלת הנוסע שמאחוריו - כאשר הדלתות פתוחות) או מסביב לכל גג הרכב במידה ואין דלתות אחוריות/חלונות אחוריים.</p>
+                    <p class="text-amber-600 mt-2 text-sm italic">יש לשים חולצה/בד בנקודות האחיזה של הרצועה שפח הרכב שלא יתעקם.</p>
+                </div>
+            </div>
+            <div class="mt-5 bg-amber-100 rounded-xl p-5 border border-amber-300">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 bg-amber-600 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">4</span>
+                    <p class="text-amber-800 font-medium">אחיזת הרצועה בצורת הישענות לאחור של <strong>3 אנשים</strong> מצד הרכב שוות ערך למשיכה של <strong>חצי טון</strong>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: כננות -->
+    <section class="py-12 md:py-16 bg-gray-100">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-14 h-14 bg-red-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-700">כננות</h2>
+            </div>
+
+            <div class="space-y-5">
+                <div class="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-sm">1</span>
+                        <h3 class="font-bold text-gray-700">חוק</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">בחוק מוגדר שחילוץ עם כננת נועד לחילוץ עצמי בלבד (קשירה של הרכב המחולץ לעצם - עץ/סלע).</p>
+                </div>
+                <div class="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-sm">2</span>
+                        <h3 class="font-bold text-gray-700">מפסק זרם</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">לרוב האנשים אין צורך בכננת, אך אם מתקינים - חובה להתקין מפסק זרם לניתוק הכננת במידה וממשיכה לפעול (למקרה שהשלט מפסיק לעבוד).</p>
+                </div>
+            </div>
+            <div class="mt-6 bg-red-50 border-2 border-red-300 rounded-xl p-6 text-center">
+                <svg class="w-12 h-12 text-red-500 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                <p class="text-red-700 font-bold text-xl mb-2">התרחקו מכבל כננת!</p>
+                <p class="text-red-600">אם רצועה לרוב תפצע קשה - <strong class="text-red-800">כבל כננת יהרוג!</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: כללי נסיעה בשטח -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-14 h-14 bg-green-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-700">כללי נסיעה בשטח</h2>
+            </div>
+
+            <!-- Terrain type cards -->
+            <div class="grid md:grid-cols-3 gap-5 mb-10">
+                <div class="bg-amber-50 rounded-xl p-5 border border-amber-200">
+                    <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-3">
+                        <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-2">חול רך</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">להוריד לבין 12-18 PSI. נסיעה ב-HIGH ליצירת ריחוף. תמיד להתחיל באיטיות.</p>
+                </div>
+                <div class="bg-stone-100 rounded-xl p-5 border border-stone-300">
+                    <div class="w-12 h-12 bg-stone-200 rounded-full flex items-center justify-center mb-3">
+                        <svg class="w-6 h-6 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-2">בוץ</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">אין להוריד אוויר (יש הסוברים אחרת, כל אחד והכרת הכלי).</p>
+                </div>
+                <div class="bg-gray-100 rounded-xl p-5 border border-gray-300">
+                    <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mb-3">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14"/></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-700 mb-2">שטח סלעי</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">להוריד 20% מה-PSI שהגלגל צריך להיות בו בכביש.</p>
+                </div>
+            </div>
+
+            <!-- Driving rules in styled cards -->
+            <div class="space-y-4">
+                <div class="bg-gray-50 rounded-xl p-5 border-r-4 border-green-500">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">2</span>
+                        <h3 class="font-bold text-gray-700">נסיעה בחול רך</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">נסיעה ב-HIGH על מנת ליצור מעין ריחוף מעל לחול הרך. תחילת נסיעה בחול תמיד באיטיות, למנוע שקיעה.</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-5 border-r-4 border-orange-500">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">3</span>
+                        <h3 class="font-bold text-gray-700">שקיעה בחול</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">אם מרגישים ששוקעים - מיד לעצור! גז חזק יגרום לסחרור הגלגלים ושקיעה עמוקה יותר.</p>
+                    <p class="text-gray-500 mt-2 text-sm">במצב של שקיעה קלה - ניתן לשים בוק עץ על החול ומעליו ג'ק, להעלות כל גלגל ששקע, להוציאו מהבור, לכסות הבור ולהוריד את הג'ק. להמשיך לגלגל הבא באותו האופן.</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-5 border-r-4 border-green-500">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">4</span>
+                        <h3 class="font-bold text-gray-700">מהירות</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">סעו לאט ככל שניתן, ומהר יותר בעת שהדבר נדרש.</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-5 border-r-4 border-blue-500">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">5</span>
+                        <h3 class="font-bold text-gray-700">הכרת הרכב</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">הכירו את מידות רכבכם - גובה, משקל, רוחב, אורך, זווית גישה וזווית התחלת נסיעה, זווית טיפוס ומרווח מהקרקע.</p>
+                </div>
+
+                <!-- Quick tips grid -->
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold text-gray-700 text-sm">6. סימני ידיים</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">הכירו את סימני הידיים בעת שמישהו מכוון אתכם.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold text-gray-700 text-sm">7. הילוכים</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">הימנעו מהעברת הילוכים בעת התמודדות עם קרקע קשה.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold text-gray-700 text-sm">8. קריאת קרקע</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">"קראו" תמיד את הקרקע שלפניכם. אם בטוח, בדקו בהליכה לפני שנוסעים.</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold text-gray-700 text-sm">9. דוושת גז</span>
+                        </div>
+                        <p class="text-gray-600 text-sm">השתמשו בעדינות עם הרגל הלוחצת על דוושת ההאצה.</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-5 border-r-4 border-purple-500">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">10</span>
+                        <h3 class="font-bold text-gray-700">תקשורת</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">במעלה - דאגו למכוון. אמרו תמיד למישהו להיכן אתם נוסעים, איזה נתיב אתם מתכננים ומתי אתם מצפים לחזור.</p>
+                </div>
+                <div class="bg-red-50 rounded-xl p-5 border-r-4 border-red-500">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">11</span>
+                        <h3 class="font-bold text-red-700">נתקעתם במעלה?</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed"><strong>לעולם אל תיתנו ברקסים!</strong> במידת הצורך - מכוון בשילוב רוורס עם L, או לעגן את הרכב.</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-5 border-r-4 border-cyan-500">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="w-8 h-8 bg-cyan-500 text-white rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">12</span>
+                        <h3 class="font-bold text-gray-700">ניקוי לאחר נסיעה</h3>
+                    </div>
+                    <p class="text-gray-600 leading-relaxed">הקפידו מיד עם היציאה לנקות את הבוץ/חול מהרכב. כשהבוץ מתקשה, הוא לח ועלול לגרום לרטיבות, חלודה וקורוזיה. חול ים או בוץ קשה הוא מחוספס כמו נייר זכוכית ועלול לגרום לשריטות בחלקי המנוע.</p>
+                    <p class="text-gray-500 mt-2 text-sm">חשוב במיוחד לשטוף את חלקי המנוע הפתוחים (אלטרנטור, ברקסים וכו').</p>
+                </div>
+            </div>
+
+            <!-- Important reminder -->
+            <div class="mt-8 bg-blue-50 border-2 border-blue-200 rounded-xl p-6 text-center">
+                <svg class="w-10 h-10 text-blue-500 mx-auto mb-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+                <p class="text-blue-800 font-bold text-lg">חוקי הנהיגה חלים גם בשטח!</p>
+                <p class="text-blue-600 mt-1">אם יש לכם ספק - אין ספק. אל תהיו גיבורים רק בשביל להרשים. סעו בזהירות ושמרו על הטבע.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-12 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center bg-white rounded-2xl p-8 md:p-12 shadow-md border border-gray-200">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-700 mb-4">צריכים עזרה בשטח?</h2>
+                <p class="text-lg text-gray-500 mb-6">אל תהססו - התקשרו אלינו!</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="tel:1700707609" class="inline-flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold px-8 py-4 rounded-full transition-colors shadow-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                        1700-707-609
+                    </a>
+                    <a href="needhelp.html" class="inline-flex items-center justify-center gap-3 bg-green-500 hover:bg-green-600 text-white text-lg font-bold px-8 py-4 rounded-full transition-colors shadow-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        זקוק לחילוץ?
+                    </a>
+                </div>
+            </div>
+            <!-- Copyright -->
+            <div class="text-center text-sm text-gray-400 mt-6">
+                <p>צוות תופעת טבע. כל הזכויות שמורות &copy; הראל רצון.</p>
+                <p class="mt-1">מאמר זה אינו בא כדי להמליץ על נהיגה בסגנון מסוים. כותב המאמר אינו אחראי לנזקים הישירים ו/או העקיפים שעלולים להיגרם כתוצאה מהשימוש בהמלצות הכתובות במאמר זה.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 border-t">
+        <div class="max-w-6xl mx-auto px-4 py-10">
+            <div class="grid md:grid-cols-3 gap-8 items-center text-center">
+                <!-- Text (right side in RTL) -->
+                <div class="md:text-right order-3 md:order-1">
+                    <p class="text-gray-700 leading-relaxed">
+                        משפחת תופעת טבע מונה אלפי חברים מכל צבעי הקשת הנמצאים בכל מקום בארץ וביקום ללא הבדל מין, גזע ודת.
+                    </p>
+                    <p class="text-gray-700 mt-2 font-medium">הכל בהתנדבות מלאה עם המון אהבה</p>
+                    <p class="text-gray-700">24/7 שעות ביממה.</p>
+                </div>
+                <!-- Logo (center) -->
+                <div class="flex justify-center order-1 md:order-2">
+                    <img src="images/logo.png" alt="תופעת טבע" class="w-28 h-28 object-contain drop-shadow-md">
+                </div>
+                <!-- Social (left side in RTL) -->
+                <div class="flex justify-center md:justify-end gap-4 order-2 md:order-3">
+                    <a href="https://www.youtube.com/channel/UCxxxxxxx" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="ערוץ יוטיוב של תופעת טבע">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/tofaat_teva/" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="עמוד אינסטגרם של תופעת טבע">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/TofaatTeva" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="עמוד פייסבוק של תופעת טבע">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t text-center text-gray-600 text-sm">
+                <p>&copy; 2018 by Noy Jakubovits. Tofaat-teva.co.il</p>
+                <p>בהתנדבות מלאה ט.ל.ח</p>
+            </div>
+        </div>
+    </footer>
+
+    </main>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-label="תפריט ניווט">
+        <div class="absolute inset-0 bg-black/50" id="mobile-menu-overlay"></div>
+        <div class="absolute top-0 right-0 w-72 h-full bg-white shadow-xl overflow-y-auto">
+            <div class="flex items-center justify-between p-4 border-b">
+                <span class="text-lg font-bold text-gray-700">תפריט</span>
+                <button id="mobile-menu-close" class="p-2 rounded-md hover:bg-gray-100" aria-label="סגור תפריט">
+                    <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <nav class="py-2" aria-label="תפריט ניווט נייד">
+                <a href="index.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">דף הבית</a>
+                <a href="join.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">הצטרפות למשפחה</a>
+                <a href="needhelp.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">זקוק לחילוץ</a>
+                <a href="offroad.html" class="block px-6 py-3 text-blue-600 hover:bg-gray-50 font-bold border-b border-gray-100">הדרכת חילוץ ונהיגת שטח</a>
+                <a href="faq.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">שאלות ומידע</a>
+                <a href="gallery.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">נפלאות הטבע</a>
+                <a href="about.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">עלינו</a>
+                <a href="contact.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">צור קשר</a>
+                <a href="terms.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50">תקנון</a>
+            </nav>
+            <div class="p-4 border-t">
+                <a href="tel:1700707609" class="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-lg font-bold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <span dir="ltr">1700-707-609</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+<script>
+(function(){try{var vid=localStorage.getItem('_tv_vid');if(!vid){vid=([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,function(c){return(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16)});localStorage.setItem('_tv_vid',vid);}fetch('/api/track',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname.split('/').pop()||'index.html',referrer:document.referrer,title:document.title,vid:vid})});}catch(e){}})();
+</script>
+</body>
+</html>

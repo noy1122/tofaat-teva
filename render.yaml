@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: tofaat-teva
+    runtime: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        value: tofaat2024
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: PORT
+        value: 3000

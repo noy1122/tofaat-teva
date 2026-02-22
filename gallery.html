@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>נפלאות הטבע - תופעת טבע</title>
+    <meta name="description" content="נפלאות הטבע - גלריית מקומות, מעיינות ופינות טבע עם הנחיות הגעה מפורטות.">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { font-family: 'Heebo', sans-serif; }
+
+        /* Gallery card */
+        .gallery-card {
+            cursor: pointer;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .gallery-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+        .gallery-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .gallery-card:hover img {
+            transform: scale(1.06);
+        }
+        .gallery-card .card-img-wrap {
+            overflow: hidden;
+            position: relative;
+        }
+        .gallery-card .card-img-wrap::after {
+            content: '🔍';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .gallery-card:hover .card-img-wrap::after {
+            opacity: 1;
+        }
+        .card-body {
+            padding: 1rem 1.1rem;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #1e3a2f;
+            margin-bottom: 0.3rem;
+        }
+        .card-snippet {
+            font-size: 0.83rem;
+            color: #6b7280;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-more {
+            margin-top: 0.55rem;
+            font-size: 0.8rem;
+            color: #16a34a;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Lightbox */
+        #lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            animation: fadeIn 0.2s ease;
+        }
+        #lightbox.active { display: flex; align-items: flex-start; justify-content: center; padding: 1.5rem; overflow-y: auto; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .lb-card {
+            background: #fff;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            max-width: 780px;
+            width: 100%;
+            margin: auto;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+            animation: slideUp 0.25s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .lb-img-wrap {
+            position: relative;
+            max-height: 440px;
+            overflow: hidden;
+        }
+        .lb-img-wrap img {
+            width: 100%;
+            max-height: 440px;
+            object-fit: cover;
+            display: block;
+        }
+        .lb-close {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            width: 2.2rem;
+            height: 2.2rem;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.55);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: background 0.2s;
+            z-index: 10;
+        }
+        .lb-close:hover { background: rgba(0,0,0,0.8); }
+
+        .lb-body {
+            padding: 1.5rem 1.8rem 2rem;
+            direction: rtl;
+        }
+        .lb-title {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #1e3a2f;
+            margin-bottom: 0.75rem;
+        }
+        .lb-desc {
+            font-size: 0.95rem;
+            color: #374151;
+            line-height: 1.85;
+            white-space: pre-line;
+        }
+        /* Directions block */
+        .lb-directions {
+            margin-top: 1rem;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-right: 4px solid #16a34a;
+            border-radius: 0 0.75rem 0.75rem 0;
+            padding: 1rem 1.1rem;
+        }
+        .lb-directions-title {
+            font-weight: 800;
+            color: #15803d;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        /* Step list */
+        .nav-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0; }
+        .nav-step {
+            display: flex;
+            gap: 0.7rem;
+            align-items: flex-start;
+            padding: 0.45rem 0;
+            position: relative;
+        }
+        .nav-step + .nav-step { border-top: 1px dashed rgba(22,163,74,0.25); }
+        .step-num {
+            flex-shrink: 0;
+            width: 1.55rem;
+            height: 1.55rem;
+            border-radius: 50%;
+            background: #16a34a;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.1rem;
+            box-shadow: 0 1px 4px rgba(22,163,74,0.3);
+        }
+        .step-text { font-size: 0.855rem; color: #1f2937; line-height: 1.65; }
+        /* Road number badge */
+        .road-badge {
+            display: inline-block;
+            background: #15803d;
+            color: #fff;
+            border-radius: 4px;
+            padding: 0px 5px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            vertical-align: middle;
+            line-height: 1.4;
+            letter-spacing: 0.02em;
+        }
+        /* Turn highlight */
+        .turn-badge {
+            color: #0369a1;
+            font-weight: 800;
+        }
+        /* Warning step */
+        .warn-step {
+            display: flex;
+            gap: 0.6rem;
+            align-items: flex-start;
+            padding: 0.5rem 0.7rem;
+            background: #fef3c7;
+            border: 1px solid #fcd34d;
+            border-radius: 0.5rem;
+            margin-top: 0.6rem;
+            font-size: 0.84rem;
+            color: #92400e;
+            line-height: 1.55;
+        }
+
+        /* Hero gradient */
+        .gallery-hero {
+            background: linear-gradient(150deg, #0c4a6e 0%, #0369a1 40%, #0284c7 70%, #22d3ee 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+    </style>
+</head>
+<body class="font-heebo bg-gray-50 text-gray-800">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:z-[200] focus:bg-white focus:px-4 focus:py-2 focus:rounded focus:shadow focus:text-blue-600 focus:font-bold">דלג לתוכן הראשי</a>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex flex-col items-center text-center">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="תופעת טבע לוגו" class="w-32 h-32 object-contain">
+                </a>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-700 mt-2">ע״מ ״הטבע זה הבית״</h1>
+                <p class="text-gray-500 text-sm">בהתנדבות מלאה</p>
+                <p class="text-xl font-bold text-gray-600 mt-1" dir="ltr">1700-707-609</p>
+                <p class="text-sm text-gray-500">חילוצים 24/7</p>
+                <p class="text-xs text-gray-600 mt-1">לע״נ ירדנה רצון</p>
+            </div>
+            <nav class="mt-4 border-t pt-3" aria-label="תפריט ראשי">
+                <button id="mobile-menu-btn" class="md:hidden w-full flex items-center justify-center gap-2 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <span class="text-sm font-medium">תפריט</span>
+                </button>
+                <div class="hidden md:flex flex-wrap justify-center gap-6 text-base">
+                    <a href="index.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">דף הבית</a>
+                    <a href="join.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">הצטרפות למשפחה</a>
+                    <a href="needhelp.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">זקוק לחילוץ</a>
+                    <a href="offroad.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">הדרכת חילוץ ונהיגת שטח</a>
+                    <div class="relative group">
+                        <button class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600 flex items-center gap-1" aria-haspopup="true" aria-expanded="false">
+                            עוד
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full right-0 bg-white shadow-lg rounded-md py-2 min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <a href="faq.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">שאלות ומידע</a>
+                            <a href="gallery.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600 font-medium">נפלאות הטבע</a>
+                            <a href="about.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">עלינו</a>
+                            <a href="contact.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">צור קשר</a>
+                            <hr class="my-1 border-gray-100">
+                            <a href="terms.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">תקנון</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+
+        <!-- Hero Banner -->
+        <div class="gallery-hero py-12 px-4 text-center">
+            <h2 class="relative text-4xl md:text-5xl font-black text-white mb-3" style="text-shadow:0 2px 12px rgba(0,0,0,0.3);">🌿 נפלאות הטבע</h2>
+            <p class="relative text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">
+                באלבום זה תוכלו למצוא מעיינות, מסלולים, חופים ופינות טבע עם הנחיות הגעה מפורטות.<br>
+                לחצו על כל תמונה לקריאת הפרטים המלאים.
+            </p>
+            <a href="https://www.facebook.com/TofaatTeva/photos/?tab=album&album_id=1433592976948685" target="_blank" rel="noopener"
+               class="relative inline-flex items-center gap-2 mt-6 bg-white/20 hover:bg-white/30 text-white border border-white/40 px-6 py-3 rounded-full font-bold transition-all backdrop-blur-sm">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                לאלבום המלא בפייסבוק
+            </a>
+        </div>
+
+        <!-- Gallery Grid -->
+        <section class="max-w-6xl mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+                <!-- 1. בריכת הנופרים -->
+                <div class="gallery-card" onclick="openLightbox(0)">
+                    <div class="card-img-wrap">
+                        <img src="images/בריכת הנופרים.jpg" alt="בריכת הנופרים" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">בריכת הנופרים</div>
+                        <div class="card-snippet">קטע רחב בירקון אליו מוזרמים מי מעיין על ידי חברת מקורות. משטחים גדולים של נופרים ונוף מרשים.</div>
+                        <span class="card-more">קרא עוד ←</span>
+                    </div>
+                </div>
+
+                <!-- 2. בריכת המשושים -->
+                <div class="gallery-card" onclick="openLightbox(1)">
+                    <div class="card-img-wrap">
+                        <img src="images/בריכת המשושים.jpg" alt="בריכת המשושים" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">בריכת המשושים</div>
+                        <div class="card-snippet">בריכה גדולה וטבעית בנחל משושים, ידועה בצורות המשושים שנוצרו בקירותיה. מים קרים גם בקיץ.</div>
+                        <span class="card-more">קרא עוד ←</span>
+                    </div>
+                </div>
+
+                <!-- 3. מעיין הרימונים -->
+                <div class="gallery-card" onclick="openLightbox(2)">
+                    <div class="card-img-wrap">
+                        <img src="images/מעיין הרימונים.jpg" alt="מעיין הרימונים" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">מעיין הרימונים</div>
+                        <div class="card-snippet">מעיין המזין בריכה טבעית בוואדי ביר אל מכסור. פינת חמד מוקפת בבוסתני רימונים.</div>
+                        <span class="card-more">קרא עוד ←</span>
+                    </div>
+                </div>
+
+                <!-- 4. האגם הנעלם -->
+                <div class="gallery-card" onclick="openLightbox(3)">
+                    <div class="card-img-wrap">
+                        <img src="images/האגם הנעלם.jpg" alt="האגם הנעלם" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">האגם הנעלם</div>
+                        <div class="card-snippet">מאגר קסום שנחבא בין צוקי האודם של הערבה — האגם הנסתר בתמנע.</div>
+                        <span class="card-more">קרא עוד ←</span>
+                    </div>
+                </div>
+
+                <!-- 5. עין סוקר -->
+                <div class="gallery-card" onclick="openLightbox(4)">
+                    <div class="card-img-wrap">
+                        <img src="images/עין סוקר.jpg" alt="עין סוקר" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">עין סוקר</div>
+                        <div class="card-snippet">נביעה קטנה המזינה פלג מים המוצל מעצי תאנה ואקליפטוס. נדנדות, שולחן, דשא וצל.</div>
+                        <span class="card-more">קרא עוד ←</span>
+                    </div>
+                </div>
+
+                <!-- 6. עין נילי -->
+                <div class="gallery-card" onclick="openLightbox(5)">
+                    <div class="card-img-wrap">
+                        <img src="images/עין נילי.jpg" alt="עין נילי" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">עין נילי</div>
+                        <div class="card-snippet">פינה קטנה מתחת לאיקליפטוסים בנחל ניל״י. מעיין עם בריכת אבנים קטנה ואווירה שקטה.</div>
+                        <span class="card-more">קרא עוד ←</span>
+                    </div>
+                </div>
+
+                <!-- 7. עין נון -->
+                <div class="gallery-card" onclick="openLightbox(6)">
+                    <div class="card-img-wrap">
+                        <img src="images/עין נון.jpg" alt="עין נון" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">עין נון</div>
+                        <div class="card-snippet">מעיין בעל ספיקה חזקה עם מים צלולים. מזין שתי בריכות, טבעית ומלאכותית. ליד הכינרת.</div>
+                        <span class="card-more">קרא עוד ←</span>
+                    </div>
+                </div>
+
+                <!-- 8. עין דביר -->
+                <div class="gallery-card" onclick="openLightbox(7)">
+                    <div class="card-img-wrap">
+                        <img src="images/עין דביר.jpg" alt="עין דביר" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">עין דביר</div>
+                        <div class="card-snippet">מעיין בשולי שכונת גבעת זאב, על שם החייל דביר עמנואלוף. בריכה עם ספסלים ופינות ישיבה.</div>
+                        <span class="card-more">קרא עוד ←</span>
+                    </div>
+                </div>
+
+                <!-- 9. עין יזרעאל -->
+                <div class="gallery-card" onclick="openLightbox(8)">
+                    <div class="card-img-wrap">
+                        <img src="images/עין יזרעאל.jpg" alt="עין יזרעאל" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">עין יזרעאל</div>
+                        <div class="card-snippet">מעיין ליד נחל חרוד ותל יזרעאל. בריכה נמוכה עם משאבה ישנה, שולחנות פיקניק וצל.</div>
+                        <span class="card-more">קרא עוד ←</span>
+                    </div>
+                </div>
+
+                <!-- 10. עין אריה -->
+                <div class="gallery-card" onclick="openLightbox(9)">
+                    <div class="card-img-wrap">
+                        <img src="images/עין אריה.jpg" alt="עין אריה" loading="lazy">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">עין אריה — ערוץ האולמוסים</div>
+                        <div class="card-snippet">מעין טבעי קטן ועגול ששופץ ע״י חברי קיבוץ רמת השופט. נטיעות של עצי שבעת המינים.</div>
+                        <span class="card-more">קרא עוד ←</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Facebook CTA -->
+            <div class="text-center mt-14">
+                <p class="text-gray-500 mb-4">רוצים לראות עוד? לאלבום המלא עם עשרות תמונות:</p>
+                <a href="https://www.facebook.com/TofaatTeva/photos/?tab=album&album_id=1433592976948685" target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-3 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
+                   style="background:linear-gradient(135deg,#1877f2,#0a5cc5);">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    לאלבום המלא בפייסבוק
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-100 border-t mt-8">
+            <div class="max-w-6xl mx-auto px-4 py-10">
+                <div class="grid md:grid-cols-3 gap-8 items-center text-center">
+                    <div class="md:text-right order-3 md:order-1">
+                        <p class="text-gray-700 leading-relaxed">משפחת תופעת טבע מונה אלפי חברים מכל צבעי הקשת הנמצאים בכל מקום בארץ וביקום ללא הבדל מין, גזע ודת.</p>
+                        <p class="text-gray-700 mt-2 font-medium">הכל בהתנדבות מלאה עם המון אהבה</p>
+                        <p class="text-gray-700">24/7 שעות ביממה.</p>
+                    </div>
+                    <div class="flex justify-center order-1 md:order-2">
+                        <img src="images/logo.png" alt="תופעת טבע" class="w-28 h-28 object-contain drop-shadow-md">
+                    </div>
+                    <div class="flex justify-center md:justify-end gap-4 order-2 md:order-3">
+                        <a href="https://www.youtube.com/channel/UCxxxxxxx" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="ערוץ יוטיוב">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                        <a href="https://www.instagram.com/tofaat_teva/" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="אינסטגרם">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="https://www.facebook.com/TofaatTeva" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="פייסבוק">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-8 pt-6 border-t text-center text-gray-600 text-sm">
+                    <p>&copy; 2018 by Noy Jakubovits. Tofaat-teva.co.il</p>
+                    <p>בהתנדבות מלאה ט.ל.ח</p>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-label="תפריט ניווט">
+        <div class="absolute inset-0 bg-black/50" id="mobile-menu-overlay"></div>
+        <div class="absolute top-0 right-0 w-72 h-full bg-white shadow-xl overflow-y-auto">
+            <div class="flex items-center justify-between p-4 border-b">
+                <span class="text-lg font-bold text-gray-700">תפריט</span>
+                <button id="mobile-menu-close" class="p-2 rounded-md hover:bg-gray-100" aria-label="סגור תפריט">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <nav class="py-2" aria-label="תפריט ניווט נייד">
+                <a href="index.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">דף הבית</a>
+                <a href="join.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">הצטרפות למשפחה</a>
+                <a href="needhelp.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">זקוק לחילוץ</a>
+                <a href="offroad.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">הדרכת חילוץ ונהיגת שטח</a>
+                <a href="faq.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">שאלות ומידע</a>
+                <a href="gallery.html" class="block px-6 py-3 text-blue-600 hover:bg-gray-50 font-bold border-b border-gray-100">נפלאות הטבע</a>
+                <a href="about.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">עלינו</a>
+                <a href="contact.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">צור קשר</a>
+                <a href="terms.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50">תקנון</a>
+            </nav>
+            <div class="p-4 border-t">
+                <a href="tel:1700707609" class="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-lg font-bold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <span dir="ltr">1700-707-609</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="תצוגת תמונה מורחבת">
+        <div class="lb-card" id="lb-card">
+            <div class="lb-img-wrap">
+                <img id="lb-img" src="" alt="">
+                <button class="lb-close" onclick="closeLightbox()" aria-label="סגור">✕</button>
+            </div>
+            <div class="lb-body">
+                <div class="lb-title" id="lb-title"></div>
+                <div class="lb-desc" id="lb-desc"></div>
+                <div class="lb-directions" id="lb-directions-wrap">
+                    <div class="lb-directions-title">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+                        דרכי הגעה
+                    </div>
+                    <div class="lb-directions-text" id="lb-directions"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+    // Gallery data
+    const galleryItems = [
+        {
+            img: 'images/בריכת הנופרים.jpg',
+            title: 'בריכת הנופרים',
+            desc: 'קטע רחב בירקון אליו מוזרמים מי מעיין על ידי חברת מקורות, כדי לשמר את האתר.\nבמקום גדלים משטחים גדולים של נופרים. בריכה גדולה בעלת נוף מרשים.\n\n⚠️ הכניסה למים אסורה.\n\nהבריכה עצמה ענקית, אך רובה מכוסה בנופרים, שמשרים אוירה של טבע בתולי. המקום מוכר מאוד וקשה למצוא אותו ריק מאדם.',
+            directions: 'נוסעים על כביש 5 ממחלף מורשה לכיוון מחלף קסם עד מחלף ירקון בו פונים דרומה, לכביש 40 לכיוון פתח תקווה. אחרי 2 ק״מ, מגיעים לצומת סגולה, פונים שמאלה. אחרי 500 מטר מגיעים לצומת גנים, פונים שמאלה לכביש 483, ונוסעים ישר כ-2.5 ק״מ עד פנייה שמאלה לגן הלאומי אפק, שם מבצעים פניית פרסה לכיוון שממנו באנו, ואחרי 300 מטר פונים ימינה לשביל עפר לכיוון מתקן של מקורות. ממשיכים בשביל כ-600 מטר, עד שמבחינים מימין במתקן ובצינור גדול שמזרים מים לתעלה רחבה. מחנים את הרכב ופונים ימינה בגשר קטן מעל התעלה, ופונים מיד שמאלה לאורך הצמחייה עד הבריכה.'
+        },
+        {
+            img: 'images/בריכת המשושים.jpg',
+            title: 'בריכת המשושים',
+            desc: 'בריכה גדולה וטבעית בנחל משושים, ידועה בגלל צורות המשושים שנוצרו בין קירותיה בשל מהירות ההתקשות של גבישים בתוך הבזלת.\nהמים קרים גם בקיץ ובעיקר בחורף. מקום מטויל מאוד.\n\n💰 הכניסה בתשלום.\n⏰ השהייה בשמורה עד שעה 15:00',
+            directions: 'מצפון הכינרת, צומת בית צידה, נוסעים צפונה על כביש 888. אחרי 6 קילומטר מגיעים לפנייה ימינה ושלט "בריכת המשושים". נוסעים בשביל כ-2 קילומטר עד החניון של רשות שמורות הטבע והגנים. מהחניון מתחיל מסלול מסומן עד הבריכה. ההליכה היא ירידה גדולה לנחל עד הבריכה, והחזרה היא עלייה באותה דרך. העלייה מצריכה מאמץ, יש להתארגן על כמויות מים מתאימות.'
+        },
+        {
+            img: 'images/מעיין הרימונים.jpg',
+            title: 'מעיין הרימונים',
+            desc: 'מעיין הרימונים, או בשמו המקורי עין אום חמיד, הוא מעיין המזין בריכה טבעית בוואדי ביר אל מכסור הנשפך לנחל ציפורי. פינת חמד מוקפת בבוסתני רימונים.\n\nהבריכה מוקפת גדר, וקצת קשה להיכנס אליה. המים עמוקים.',
+            directions: 'מצומת המוביל נוסעים צפונית מערבית לכיוון חיפה על כביש 79. אחרי 3 קילומטר מגיעים לתחנת דלק בכניסה לביר אל מכסור. דרומית מזרחית, ממול ביר אל מכסור בעברו השני של הכביש, מבחינים בוואדי ביר אל מכסור בין הגבעות. הולכים בשבילים המובילים אליו, ואחרי כ-1 ק״מ מגיעים לבריכה.\n\nדרך נוספת: ללכת כ-2 ק״מ בשביל ישראל העובר בצומת יפתחאל (הצמודה לצומת המוביל) ועובר בוואדי ביר אל מכסור, כ-300 מ׳ מהבריכה.'
+        },
+        {
+            img: 'images/האגם הנעלם.jpg',
+            title: 'האגם הנעלם — האגם הנסתר בתמנע',
+            desc: 'מאגר קסום שנחבא בין צוקי האודם של הערבה.\n\n⚠️ הירידה למאגר מסוכנת ואסורה. המים מלוחים קצת אבל מותר לשחות — אלו מי תאום שפרצו החוצה כשחצבו נחושת.\n\nתהנו ואל תשכחו לשמור על הטבע.',
+            directions: 'כביש 90 בואכה אילת — נעבור את קיבוץ יוטבתה, נמשיך ונעבור את היישוב אליפז. לאחר שני קילומטר נפנה ימינה לכיוון "מכרות תמנע" ונעלה על כביש אספלט. אחרי 500 מטר יש עוד פניה ימינה לשביל עפר ישר. נתקדם על השביל כ-300 מטר — מצד שמאל נגלה סוללות עפר וגדר. כאן נעצור, נרד ונעבור את הגדר. נתקדם בזהירות לעבר הצוק.\n\n⚠️ הצוק התוחם את האגם מפתיע, לכן יש ללכת בזהירות. ירידה לאגם מצד צפון — אפשר לרדת עם רכב 4X4 או בהליכה רגלית.'
+        },
+        {
+            img: 'images/עין סוקר.jpg',
+            title: 'עין סוקר',
+            desc: 'נביעה קטנה המזינה פלג מים המוצל מעצי תאנה ואקליפטוס.\nנדנדות, שולחן, דשא, צל, ושקט... מסודר ומטופח.\n\n🚙 למעיין זה מומלץ להגיע עם רכב שטח בלבד.',
+            directions: 'ממחלף אליקים נוסעים בכביש 672 לכיוון דרום — רמות מנשה, עין השופט. אחרי כ-7.3 ק״מ ממחלף אליקים (אחרי כ-2.1 ק״מ מצומת עין השופט) מתחיל מימין שביל עפר המתאים לרכב שטח מסומן ירוק. פונים לשביל, ונוסעים כ-1.9 ק״מ עד פיצול שמאלה. פונים שמאלה, וממשיכים כ-400 מ׳ בירידה עד שמבחינים משמאל, בצמוד לשביל בגדר מצינורות מתכת. מחנים את הרכב, ועוברים את הגדר ברגל דרך מעבר זווית. הנביעה מתחת לתאנה.'
+        },
+        {
+            img: 'images/עין נילי.jpg',
+            title: 'עין נילי',
+            desc: 'פינה קטנה מתחת לאיקליפטוסים בנחל ניל״י. המעיין נובע במעלה הנחל, וזורם לבריכת אבנים נמוכה בגובה חצי מטר.',
+            directions: 'מפרדס חנה, נוסעים לכיוון בנימינה על כביש 652. אחרי 4 קילומטר מגיעים לצומת עדה. פונים ימינה לכיוון גבעת עדה, וממשיכים כ-4.5 ק״מ עד כיכר הכניסה לגבעת עדה. ממשיכים ישר. אחרי 3 ק״מ מגיעים לפנייה שמאלה לכיוון גבעת ניל״י. פונים שמאלה. אחרי כ-3 ק״מ מגיעים לכניסה לגבעת נילי.\n\nשימו לב: הכניסה לקיבוץ נילי היא בכביש הפונה 90 מעלות ימינה. במקום לפנות ימינה — ממשיכים ישר לשביל עפר רחב שיורד לוואדי. ממשיכים כ-1 ק״מ עד גשר קטן. כאן משאירים את הרכב (מנקודה זו רק רכבי 4X4 יכולים להמשיך). חוצים לשביל, ואחרי כמה מאות מטרים חוצים חסימה ונכנסים לכרם. חוצים את הכרם לכיוון מזרח, נכנסים לנחל, וממשיכים כ-300 מטר עד קבוצת איקליפטוסים גדולה ומתחתיה הבריכה.'
+        },
+        {
+            img: 'images/עין נון.jpg',
+            title: 'עין נון',
+            desc: 'מעיין בעל ספיקה חזקה, מימיו צלולים מאוד. מזין שתי בריכות — טבעית ומלאכותית. המעיין שופץ לאחרונה והבריכה המלאכותית סודרה עם שולחנות פיקניק ופינות מוצלות, ניטעו עצים ונבנו שבילי גישה קטנים.\n\nהמעיין נמצא מתחת ליישוב מגדל, לא רחוק משפת הכינרת. במקום עובר שביל ישראל.',
+            directions: 'מטבריה נוסעים על כביש 90 סובב כינרת לכיוון צפון. אחרי כ-7 ק״מ מגיעים לפנייה שמאלה לכיוון מגדל — לא פונים, וממשיכים 10 מטר אחרי הצומת ופונים שמאלה לשביל עפר (לפני הפיצוציה שבצומת), מסומן בשביל ישראל (לבן כחול כתום). נוסעים בשביל, חולפים על פני שלט קטן "למעיין נון". אחרי כ-500 מטר מבחינים מימין למטה בבריכה המלאכותית. להגעה לבריכה הטבעית — ללכת בשביל קטן המקיף את האיזור שם יש שער מתכת קטן שדרכו מגיעים לבריכה.'
+        },
+        {
+            img: 'images/עין דביר.jpg',
+            title: 'עין דביר',
+            desc: 'מעיין בשולי שכונת גבעת זאב, על שם החייל דביר עמנואלוף ז״ל. בריכה בגודל 3×5 מ׳ עם ספסלים ופינות ישיבה.\n\nלשמור על הטבע כי הוא של כולנו — תופעת טבע.',
+            directions: 'מכיוון מרכז: נוסעים על כביש 443 לכיוון ירושלים עד צומת גבעת זאב. פונים ימינה ונוסעים כמה דקות עד הכניסה ימינה לגבעת זאב (רח׳ המכבים), בכיכר הראשונה — ישר (במרכז הכיכר עץ זית עתיק). ממשיכים על רח׳ המכבים ישר, עוברים 2 כיכרות. הכיכר השלישית יחסית גדולה — ממשיכים ישר, ומגיעים לכיכר רביעית ובה פונים שמאלה. ממשיכים עד שהכביש יוצא מהשכונה. אחרי כ-700 מטר פונים שמאלה לכביש קטן. ממשיכים 200 מ׳ עד פנייה ימינה. ממשיכים 300 מ׳ עד שמבחינים משמאל בוואדי קטן בין שני הרים. מכאן מתחיל שביל העולה על ההר הימני עד המעיין.'
+        },
+        {
+            img: 'images/עין יזרעאל.jpg',
+            title: 'עין יזרעאל — אזור עפולה',
+            desc: 'מעיין שנובע לא רחוק מנחל חרוד, מתחת תל יזרעאל. סמוך לקיבוץ יזרעאל.\nבריכה נמוכה, שבמרכזה מבנה ובו משאבה ישנה ששימשה לשאיבת המים. במקום שולחנות פיקניק ופחי זבל.\n\nתופעת טבע — הבית של הטבע',
+            directions: 'מעפולה נוסעים על כביש 71 לכיוון עמק חרוד — בית שאן. אחרי 7 ק״מ מגיעים לצומת נבות. פונים ימינה. אחרי קילומטר מבחינים מימין בשלט המזהיר מפני החלקה — שם מתחיל שביל רחב מסומן כחול. יורדים לשביל. נוסעים בשביל הכחול כ-1.5 ק״מ עד קבוצה גדולה של עצי איקליפטוס — ביניהם הבריכה.'
+        },
+        {
+            img: 'images/עין אריה.jpg',
+            title: 'עין אריה — ערוץ האולמוסים',
+            desc: 'מעין טבעי קטן ועגול ששופץ ע״י חברי קיבוץ רמת השופט הסמוך, נקרא על שם אריה תלמי שבנו עמוס מימן את השיפוץ. במקום נטיעות של עצי שבעת המינים.',
+            directions: 'ממחלף אליקים בכביש 6 צפון נוסעים על כביש 672 דרומית מזרחית לכיוון רמת השופט. אחרי 3.5 ק״מ מגיעים לצומת רמת השופט, פונים שמאלה. אחרי 1.3 ק״מ פונים שמאלה ומיד אחרי 20 מטר ימינה לשביל עפר רחב (שלט "טייפון - פארק אתגרי"). השביל יורד מתחת לרמת השופט, חוצים מעבר בקר. אחרי כ-1 ק״מ מבחינים מימין בפארק אתגרי גדול, ואחריו חנייה גדולה. מקצה החנייה הצפוני יורד שביל לוואדי — כאן משאירים את הרכב. ממשיכים בשביל כ-750 מ׳ עד שביל מסומן אדום. פונים שמאלה, השביל מקיף את הגבעה ולאחר 500 מ׳ מגיעים לצומת X — פונים שמאלה ועולים בערוץ. לאחר 500 מ׳ של עלייה — שלט ירוק "נחל השופט". כ-50 מטר לפני השלט, מצד ימין — המעיין.'
+        }
+    ];
+
+    function highlightStep(text) {
+        // Highlight road numbers: כביש 90, כביש 443, etc.
+        text = text.replace(/(כביש)\s+(\d+)/g, '$1 <span class="road-badge">$2</span>');
+        // Highlight turns
+        text = text.replace(/(פונים ימינה|פונים שמאלה|פניה ימינה|פניה שמאלה|פנה ימינה|פנה שמאלה)/g,
+            '<span class="turn-badge">$1</span>');
+        return text;
+    }
+
+    function renderDirections(el, rawText) {
+        el.innerHTML = '';
+        // Split into paragraphs first (double newline), then into sentences
+        const paragraphs = rawText.split(/\n\n+/);
+        const ol = document.createElement('ol');
+        ol.className = 'nav-steps';
+        let stepNum = 1;
+
+        paragraphs.forEach(para => {
+            para = para.trim();
+            if (!para) return;
+
+            // Warning / note paragraph (starts with ⚠️ or 💰 or 🚙 or ⏰)
+            if (/^[⚠️💰🚙⏰🔔]/.test(para)) {
+                const warn = document.createElement('div');
+                warn.className = 'warn-step';
+                warn.innerHTML = para.replace(/\n/g, '<br>');
+                ol.appendChild(warn);
+                return;
+            }
+
+            // Regular paragraph: split into sentences by ". " or ".\n"
+            const sentences = para.split(/\.\s+/).filter(s => s.trim().length > 3);
+            sentences.forEach(sentence => {
+                sentence = sentence.trim().replace(/\.+$/, ''); // strip trailing dot
+                if (!sentence) return;
+
+                const li = document.createElement('li');
+                li.className = 'nav-step';
+
+                const num = document.createElement('span');
+                num.className = 'step-num';
+                num.textContent = stepNum++;
+
+                const txt = document.createElement('span');
+                txt.className = 'step-text';
+                txt.innerHTML = highlightStep(sentence);
+
+                li.appendChild(num);
+                li.appendChild(txt);
+                ol.appendChild(li);
+            });
+        });
+
+        el.appendChild(ol);
+    }
+
+    function openLightbox(index) {
+        const item = galleryItems[index];
+        document.getElementById('lb-img').src = item.img;
+        document.getElementById('lb-img').alt = item.title;
+        document.getElementById('lb-title').textContent = item.title;
+        document.getElementById('lb-desc').textContent = item.desc;
+        renderDirections(document.getElementById('lb-directions'), item.directions);
+        const lb = document.getElementById('lightbox');
+        lb.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Close on backdrop click (NOT on card click)
+    document.getElementById('lightbox').addEventListener('click', function(e) {
+        if (e.target === this) closeLightbox();
+    });
+
+    // Keyboard: Escape to close
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeLightbox();
+    });
+    </script>
+<script>
+(function(){try{var vid=localStorage.getItem('_tv_vid');if(!vid){vid=([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,function(c){return(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16)});localStorage.setItem('_tv_vid',vid);}fetch('/api/track',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname.split('/').pop()||'index.html',referrer:document.referrer,title:document.title,vid:vid})});}catch(e){}})();
+</script>
+</body>
+</html>

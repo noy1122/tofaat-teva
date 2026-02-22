@@ -1,0 +1,92 @@
+/* Custom font */
+.font-heebo {
+    font-family: 'Heebo', sans-serif;
+}
+
+/* Active nav link */
+.nav-link.active {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* FAQ Accordion */
+.faq-item .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item.open .faq-answer {
+    max-height: 500px;
+    padding-top: 0.75rem;
+}
+
+.faq-item .faq-arrow {
+    transition: transform 0.3s ease;
+}
+
+.faq-item.open .faq-arrow {
+    transform: rotate(180deg);
+}
+
+/* Hover effects for service cards */
+.service-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Form inputs */
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Accessibility: visible focus indicator for keyboard navigation */
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Mobile menu */
+.mobile-menu {
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu.open {
+    transform: translateX(0);
+}
+
+/* Gallery grid */
+.gallery-grid img {
+    transition: transform 0.3s ease;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05);
+}
+
+/* Footer logo - remove white background */
+footer img[alt="תופעת טבע"] {
+    mix-blend-mode: multiply;
+    filter: contrast(1.1);
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .hero-text {
+        font-size: 1.5rem;
+    }
+}

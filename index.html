@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>תופעת טבע - הטבע זה הבית</title>
+    <meta name="description" content="תופעת טבע - ארגון התנדבותי לחילוצי שטח, טיולים, איתור נעדרים ושיקום הטבע. חילוצים 24/7 בהתנדבות מלאה.">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="font-heebo bg-white text-gray-800">
+    <!-- Skip to content -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:z-[200] focus:bg-white focus:px-4 focus:py-2 focus:rounded focus:shadow focus:text-blue-600 focus:font-bold">דלג לתוכן הראשי</a>
+
+    <!-- Header (scrolls with page, not sticky) -->
+    <header class="bg-white shadow-sm z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3">
+            <div class="flex flex-col items-center text-center">
+                <a href="index.html">
+                    <img src="images/logo.png" alt="תופעת טבע לוגו" class="w-28 h-28 object-contain">
+                </a>
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-700 mt-1">ע״מ ״הטבע זה הבית״</h1>
+                <p class="text-gray-500 text-sm">בהתנדבות מלאה</p>
+                <p class="text-xl font-bold text-gray-600 mt-1" dir="ltr">1700-707-609</p>
+                <p class="text-sm text-gray-500">חילוצים 24/7</p>
+                <p class="text-xs text-gray-600 mt-1">לע״נ ירדנה רצון</p>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="mt-3 border-t pt-2" aria-label="תפריט ראשי">
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden w-full flex items-center justify-center gap-2 py-2 text-gray-600 hover:bg-gray-50 rounded-md">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <span class="text-sm font-medium">תפריט</span>
+                </button>
+                <!-- Desktop nav -->
+                <div class="hidden md:flex flex-wrap justify-center gap-6 text-base">
+                    <a href="index.html" class="nav-link active px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600 font-medium">דף הבית</a>
+                    <a href="join.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">הצטרפות למשפחה</a>
+                    <a href="needhelp.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">זקוק לחילוץ</a>
+                    <a href="offroad.html" class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600">הדרכת חילוץ ונהיגת שטח</a>
+                    <div class="relative group">
+                        <button class="nav-link px-3 py-1 rounded-md hover:bg-gray-100 text-gray-600 flex items-center gap-1" aria-haspopup="true" aria-expanded="false">
+                            עוד
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div class="absolute top-full right-0 bg-white shadow-lg rounded-md py-2 min-w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <a href="faq.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">שאלות ומידע</a>
+                            <a href="gallery.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">נפלאות הטבע</a>
+                            <a href="about.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">עלינו</a>
+                            <a href="contact.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">צור קשר</a>
+                            <hr class="my-1 border-gray-100">
+                            <a href="terms.html" class="block px-4 py-2 hover:bg-gray-100 text-gray-600">תקנון</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+<main id="main-content">
+
+    <!-- Hero Section -->
+    <section class="relative h-[60vh] min-h-[350px] overflow-hidden">
+        <img src="images/hero-jeep.jpg" alt="ג'יפ בשטח" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/30"></div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-600 mb-12 tracking-wide">תחומי העיסוק שלנו</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
+                <!-- Service 1 -->
+                <div class="text-center">
+                    <img src="images/icon-jeep.png" alt="חילוצים" class="w-20 h-20 mx-auto mb-4">
+                    <h3 class="text-xl md:text-2xl font-bold mb-2">חילוצים</h3>
+                    <p class="text-gray-500">בכל דרך, 24 שעות ביממה.</p>
+                </div>
+                <!-- Service 2 -->
+                <div class="text-center">
+                    <img src="images/icon-support.png" alt="סיוע חירום" class="w-20 h-20 mx-auto mb-4">
+                    <h3 class="text-xl md:text-2xl font-bold mb-2">סיוע חירום</h3>
+                    <p class="text-gray-500">עזרה לכוחות הבטחון במידת הצורך.</p>
+                </div>
+                <!-- Service 3 -->
+                <div class="text-center">
+                    <img src="images/icon-growth.png" alt="שיקום הטבע" class="w-20 h-20 mx-auto mb-4">
+                    <h3 class="text-xl md:text-2xl font-bold mb-2">שיקום הטבע</h3>
+                    <p class="text-gray-500">נקיונות, שיקום נחלים ובניית פינות ישיבה וזולות בשטח.</p>
+                </div>
+                <!-- Service 4 -->
+                <div class="text-center">
+                    <img src="images/icon-destination.png" alt="טיולים" class="w-20 h-20 mx-auto mb-4">
+                    <h3 class="text-xl md:text-2xl font-bold mb-2">טיולים</h3>
+                    <p class="text-gray-500">טיולי עמותות, טיולי ג׳יפים, מטיבי לכת ומסיבות לניקוי.</p>
+                </div>
+                <!-- Service 5 -->
+                <div class="text-center">
+                    <img src="images/icon-search.png" alt="איתור נעדרים" class="w-20 h-20 mx-auto mb-4">
+                    <h3 class="text-xl md:text-2xl font-bold mb-2">איתור נעדרים</h3>
+                    <p class="text-gray-500">עזרה באיתור נעדרים בסיכון גבוה בשיתוף פעולה עם כוחות הבטחון.</p>
+                </div>
+                <!-- Service 6 -->
+                <div class="text-center">
+                    <img src="images/icon-tent.png" alt="מפגשים ופסטיבלים" class="w-20 h-20 mx-auto mb-4">
+                    <h3 class="text-xl md:text-2xl font-bold mb-2">מפגשים ופסטיבלים</h3>
+                    <p class="text-gray-500">כל שבוע מפגש באיזור חיוג אחר, כל מספר חודשים פסטיבל ענק.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join WhatsApp Section -->
+    <section class="relative py-20 overflow-hidden">
+        <img src="images/hand-car.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="relative z-10 max-w-xl mx-4 md:mx-auto text-center bg-white/90 backdrop-blur-sm rounded-xl p-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-600 mb-3 tracking-wide">רוצה להצטרף אלינו?</h2>
+            <p class="text-xl text-gray-500 mb-6">קבוצת ה-WhatsApp פתוחה לכולם!</p>
+            <a href="join.html" class="inline-flex items-center gap-3 bg-green-700 hover:bg-green-800 text-white text-lg font-bold px-8 py-4 rounded-full transition-colors shadow-lg">
+                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                לחץ כאן
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div>
+                    <img src="images/nature1.jpg" alt="טבע" class="rounded-xl shadow-lg w-full">
+                </div>
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-600 mb-6 tracking-wide">מה היא תופעת טבע?</h2>
+                    <p class="text-lg text-gray-500 leading-relaxed mb-4">
+                        תופעת טבע נוסדה במרץ 2012.
+                        תופעת טבע היא משפחה של אנשים שאוהבים טבע ודואגים לזולת.
+                        תופעת טבע מתבססת על אהבה ענקית וקבלת האחר ללא תנאי.
+                        אצלנו הכל בהתנדבות מלאה!
+                    </p>
+                    <p class="text-lg text-gray-500 leading-relaxed mb-4">
+                        <strong>תופעת טבע מונה מעל ל-25,000 חברים!</strong>
+                    </p>
+                    <p class="text-lg text-gray-500 leading-relaxed mb-6">
+                        אז אתם אוהבים טבע? מעיינות? שטח? עזרה לזולת?
+                        <br>בקיצור, מספיק לטייל לבד! הצטרפו אלינו.
+                    </p>
+                    <a href="about.html" class="inline-block border-2 border-gray-400 text-gray-600 hover:bg-gray-600 hover:text-white px-6 py-2 rounded-md transition-colors font-medium">קרא עוד</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Section - הסרטונים שלנו -->
+    <section class="py-16 bg-white">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-600 mb-12 tracking-wide">הסרטונים שלנו</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Video 1 -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="relative aspect-video bg-gray-200">
+                        <a href="https://youtu.be/27rpy5018OM" target="_blank" class="block w-full h-full">
+                            <div class="absolute inset-0 flex items-center justify-center bg-gray-800/20 hover:bg-gray-800/40 transition-colors z-10">
+                                <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-8 h-8 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/27rpy5018OM/hqdefault.jpg" alt="תגבור כוחות בנהריה" class="w-full h-full object-cover">
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 font-medium leading-relaxed">תגבור כוחות והפעלת חפ״ק חירום בנהריה 2020, כתבה ששודרה אצל אמנון לוי ערוץ 13</p>
+                    </div>
+                </div>
+                <!-- Video 2 -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="relative aspect-video bg-gray-200">
+                        <a href="https://youtu.be/croQLPKPxEI" target="_blank" class="block w-full h-full">
+                            <div class="absolute inset-0 flex items-center justify-center bg-gray-800/20 hover:bg-gray-800/40 transition-colors z-10">
+                                <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-8 h-8 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/croQLPKPxEI/hqdefault.jpg" alt="טיול למען חולי סרטן" class="w-full h-full object-cover">
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 font-medium leading-relaxed">טיול ומפגש למען חולי סרטן של עזר מציון 2018</p>
+                    </div>
+                </div>
+                <!-- Video 3 -->
+                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                    <div class="relative aspect-video bg-gray-200">
+                        <a href="https://www.youtube.com/watch?v=5_Sxn5d8ZFQ" target="_blank" class="block w-full h-full">
+                            <div class="absolute inset-0 flex items-center justify-center bg-gray-800/20 hover:bg-gray-800/40 transition-colors z-10">
+                                <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-8 h-8 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/5_Sxn5d8ZFQ/hqdefault.jpg" alt="כתבה ערוץ 12" class="w-full h-full object-cover">
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-gray-600 font-medium leading-relaxed">הכתבה המלאה - חדשות סוף שבוע עם דנה וויס, ערוץ 12</p>
+                    </div>
+                </div>
+            </div>
+            <!-- More Videos Button -->
+            <div class="text-center mt-10">
+                <a href="https://www.youtube.com/channel/UCxxxxxxx" target="_blank" class="inline-block border-2 border-gray-400 text-gray-600 hover:bg-gray-600 hover:text-white px-8 py-3 rounded-md transition-colors font-medium text-lg">לעוד סרטונים</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Need Help Section -->
+    <section class="relative py-20 overflow-hidden">
+        <img src="images/nature2.jpg" alt="" class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black/40"></div>
+        <div class="relative z-10 max-w-xl mx-4 md:mx-auto text-center bg-white/90 backdrop-blur-sm rounded-xl p-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-600 mb-3 tracking-wide">זקוק לחילוץ?</h2>
+            <p class="text-xl text-gray-500 mb-6">התקשר אלינו!</p>
+            <a href="tel:1700707609" class="inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold px-8 py-4 rounded-full transition-colors shadow-lg">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                1700-707-609
+            </a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats-section" class="overflow-hidden">
+        <div class="grid grid-cols-2 md:grid-cols-4">
+            <!-- Stat 1 - כמות טיולי עמותות -->
+            <div class="bg-[#1a1a1a] text-white py-16 px-6 text-center flex flex-col items-center justify-center">
+                <div class="mb-6">
+                    <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="1.5">
+                        <path d="M20 75 L35 55 L25 55 L40 35 L30 35 L50 10 L70 35 L60 35 L75 55 L65 55 L80 75 Z"/>
+                        <rect x="15" y="78" width="70" height="3" rx="1" fill="white" opacity="0.5"/>
+                        <path d="M10 85 Q25 82 40 85 Q55 88 70 85 Q80 83 90 85" stroke="white" stroke-width="1" opacity="0.3"/>
+                        <rect x="30" y="60" width="8" height="20" rx="2" fill="white" opacity="0.15"/>
+                        <rect x="62" y="55" width="8" height="25" rx="2" fill="white" opacity="0.15"/>
+                    </svg>
+                </div>
+                <p class="text-lg font-medium mb-1">כמות טיולי עמותות</p>
+                <p class="text-sm text-gray-400 mb-4">בשנה האחרונה</p>
+                <p class="text-5xl md:text-6xl font-bold counter" data-target="42">0</p>
+            </div>
+            <!-- Stat 2 - כמות חילוצים -->
+            <div class="bg-[#4a4a4a] text-white py-16 px-6 text-center flex flex-col items-center justify-center">
+                <div class="mb-6">
+                    <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="2">
+                        <rect x="25" y="45" width="50" height="30" rx="3"/>
+                        <rect x="30" y="40" width="40" height="5" rx="2"/>
+                        <circle cx="35" cy="75" r="8"/><circle cx="35" cy="75" r="4" fill="white"/>
+                        <circle cx="65" cy="75" r="8"/><circle cx="65" cy="75" r="4" fill="white"/>
+                        <rect x="35" y="50" width="30" height="15" rx="2"/>
+                        <line x1="50" y1="50" x2="50" y2="65"/>
+                        <path d="M20 55 L25 50 L25 60 Z" fill="white" opacity="0.5"/>
+                        <rect x="40" y="30" width="20" height="10" rx="2"/>
+                        <line x1="45" y1="30" x2="45" y2="25"/>
+                        <line x1="55" y1="30" x2="55" y2="25"/>
+                    </svg>
+                </div>
+                <p class="text-lg font-medium mb-4">כמות חילוצים</p>
+                <p class="text-5xl md:text-6xl font-bold counter" data-target="582381" data-format="true">0</p>
+            </div>
+            <!-- Stat 3 - טיפול באיתור נעדרים -->
+            <div class="bg-[#d4d4d4] text-gray-800 py-16 px-6 text-center flex flex-col items-center justify-center">
+                <div class="mb-6">
+                    <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" stroke="#333" stroke-width="2">
+                        <circle cx="50" cy="30" r="15"/>
+                        <path d="M50 20 Q55 28 50 35 Q45 28 50 20" fill="#333" opacity="0.2"/>
+                        <path d="M35 45 Q50 55 65 45 L70 70 Q50 80 30 70 Z"/>
+                        <line x1="40" y1="55" x2="35" y2="75" stroke-width="1.5"/>
+                        <line x1="60" y1="55" x2="65" y2="75" stroke-width="1.5"/>
+                        <circle cx="70" cy="35" r="10" stroke-dasharray="3 2"/>
+                        <rect x="66" y="32" width="8" height="6" rx="1" fill="#333" opacity="0.3"/>
+                    </svg>
+                </div>
+                <p class="text-lg font-medium mb-4">טיפול באיתור נעדרים</p>
+                <p class="text-5xl md:text-6xl font-bold counter" data-target="735">0</p>
+            </div>
+            <!-- Stat 4 - כמות מתנדבים -->
+            <div class="bg-[#546e7a] text-white py-16 px-6 text-center flex flex-col items-center justify-center">
+                <div class="mb-6">
+                    <svg class="w-24 h-24 mx-auto" viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="2">
+                        <path d="M50 55 L35 70 L20 55" stroke-width="2.5"/>
+                        <path d="M50 55 L65 70 L80 55" stroke-width="2.5"/>
+                        <path d="M35 70 L35 85" stroke-width="2"/>
+                        <path d="M65 70 L65 85" stroke-width="2"/>
+                        <circle cx="50" cy="25" r="10"/>
+                        <circle cx="25" cy="35" r="8"/>
+                        <circle cx="75" cy="35" r="8"/>
+                        <path d="M40 40 L50 55 L60 40" fill="white" opacity="0.15"/>
+                    </svg>
+                </div>
+                <p class="text-lg font-medium mb-4">כמות מתנדבים</p>
+                <p class="text-5xl md:text-6xl font-bold counter" data-target="38253" data-format="true">0</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 border-t">
+        <div class="max-w-6xl mx-auto px-4 py-10">
+            <div class="grid md:grid-cols-3 gap-8 items-center text-center">
+                <!-- Text (right side in RTL) -->
+                <div class="md:text-right order-3 md:order-1">
+                    <p class="text-gray-700 leading-relaxed">
+                        משפחת תופעת טבע מונה אלפי חברים מכל צבעי הקשת הנמצאים בכל מקום בארץ וביקום ללא הבדל מין, גזע ודת.
+                    </p>
+                    <p class="text-gray-700 mt-2 font-medium">הכל בהתנדבות מלאה עם המון אהבה</p>
+                    <p class="text-gray-700">24/7 שעות ביממה.</p>
+                </div>
+                <!-- Logo (center) -->
+                <div class="flex justify-center order-1 md:order-2">
+                    <img src="images/logo.png" alt="תופעת טבע" class="w-28 h-28 object-contain drop-shadow-md">
+                </div>
+                <!-- Social (left side in RTL) -->
+                <div class="flex justify-center md:justify-end gap-4 order-2 md:order-3">
+                    <a href="https://www.youtube.com/channel/UCxxxxxxx" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="ערוץ יוטיוב של תופעת טבע">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/tofaat_teva/" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="עמוד אינסטגרם של תופעת טבע">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/TofaatTeva" target="_blank" class="w-11 h-11 bg-gray-700 hover:bg-gray-900 rounded-full flex items-center justify-center text-white transition-colors" aria-label="עמוד פייסבוק של תופעת טבע">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t text-center text-gray-600 text-sm">
+                <p>&copy; 2018 by Noy Jakubovits. Tofaat-teva.co.il</p>
+                <p>בהתנדבות מלאה ט.ל.ח</p>
+            </div>
+        </div>
+    </footer>
+
+    </main>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-label="תפריט ניווט">
+        <div class="absolute inset-0 bg-black/50" id="mobile-menu-overlay"></div>
+        <div class="absolute top-0 right-0 w-72 h-full bg-white shadow-xl overflow-y-auto">
+            <div class="flex items-center justify-between p-4 border-b">
+                <span class="text-lg font-bold text-gray-700">תפריט</span>
+                <button id="mobile-menu-close" class="p-2 rounded-md hover:bg-gray-100" aria-label="סגור תפריט">
+                    <svg class="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <nav class="py-2" aria-label="תפריט ניווט נייד">
+                <a href="index.html" class="block px-6 py-3 text-blue-600 font-bold hover:bg-gray-50 border-b border-gray-100">דף הבית</a>
+                <a href="join.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">הצטרפות למשפחה</a>
+                <a href="needhelp.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">זקוק לחילוץ</a>
+                <a href="offroad.html" class="block px-6 py-3 text-gray-700 hover:bg-gray-50 font-medium border-b border-gray-100">הדרכת חילוץ ונהיגת שטח</a>
+                <a href="faq.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">שאלות ומידע</a>
+                <a href="gallery.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">נפלאות הטבע</a>
+                <a href="about.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">עלינו</a>
+                <a href="contact.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50 border-b border-gray-100">צור קשר</a>
+                <a href="terms.html" class="block px-6 py-3 text-gray-600 hover:bg-gray-50">תקנון</a>
+            </nav>
+            <div class="p-4 border-t">
+                <a href="tel:1700707609" class="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-lg font-bold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <span dir="ltr">1700-707-609</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+<script>
+(function(){try{var vid=localStorage.getItem('_tv_vid');if(!vid){vid=([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,function(c){return(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16)});localStorage.setItem('_tv_vid',vid);}fetch('/api/track',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname.split('/').pop()||'index.html',referrer:document.referrer,title:document.title,vid:vid})});}catch(e){}})();
+</script>
+</body>
+</html>
+

@@ -143,7 +143,7 @@
                         אצלנו הכל בהתנדבות מלאה!
                     </p>
                     <p class="text-lg text-gray-500 leading-relaxed mb-4">
-                        <strong>תופעת טבע מונה מעל ל-25,000 חברים!</strong>
+                        <strong>תופעת טבע מונה מעל ל-35,000 חברים!</strong>
                     </p>
                     <p class="text-lg text-gray-500 leading-relaxed mb-6">
                         אז אתם אוהבים טבע? מעיינות? שטח? עזרה לזולת?
@@ -157,64 +157,218 @@
 
     <!-- Videos Section - הסרטונים שלנו -->
     <section class="py-16 bg-white">
-        <div class="max-w-5xl mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-600 mb-12 tracking-wide">הסרטונים שלנו</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Video 1 -->
-                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-600 mb-3 tracking-wide">הסרטונים שלנו</h2>
+            <p class="text-center text-gray-400 mb-8">סרטונים, כתבות וסיקורים בתקשורת</p>
+
+            <!-- Category filter -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10" id="video-filters">
+                <button onclick="filterVideos('all')" data-cat="all" class="video-filter-btn active px-4 py-1.5 rounded-full text-sm font-bold border-2 transition-all">הכל</button>
+                <button onclick="filterVideos('פסטיבל')" data-cat="פסטיבל" class="video-filter-btn px-4 py-1.5 rounded-full text-sm font-bold border-2 transition-all">🎪 פסטיבל</button>
+                <button onclick="filterVideos('כתבה')" data-cat="כתבה" class="video-filter-btn px-4 py-1.5 rounded-full text-sm font-bold border-2 transition-all">📺 כתבה</button>
+                <button onclick="filterVideos('שיקום הטבע')" data-cat="שיקום הטבע" class="video-filter-btn px-4 py-1.5 rounded-full text-sm font-bold border-2 transition-all">🌿 שיקום הטבע</button>
+                <button onclick="filterVideos('איתור נעדרים')" data-cat="איתור נעדרים" class="video-filter-btn px-4 py-1.5 rounded-full text-sm font-bold border-2 transition-all">🔍 איתור נעדרים</button>
+                <button onclick="filterVideos('חדשות')" data-cat="חדשות" class="video-filter-btn px-4 py-1.5 rounded-full text-sm font-bold border-2 transition-all">📰 חדשות</button>
+                <button onclick="filterVideos('למען עמותות')" data-cat="למען עמותות" class="video-filter-btn px-4 py-1.5 rounded-full text-sm font-bold border-2 transition-all">❤️ למען עמותות</button>
+            </div>
+
+            <!-- Video grid -->
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6" id="videos-grid">
+
+                <!-- פסטיבל -->
+                <div class="video-card bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow" data-cat="פסטיבל">
                     <div class="relative aspect-video bg-gray-200">
-                        <a href="https://youtu.be/27rpy5018OM" target="_blank" class="block w-full h-full">
-                            <div class="absolute inset-0 flex items-center justify-center bg-gray-800/20 hover:bg-gray-800/40 transition-colors z-10">
-                                <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
-                                    <svg class="w-8 h-8 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        <a href="https://youtu.be/bj9cZP_s8U8" target="_blank" class="block w-full h-full">
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-colors z-10">
+                                <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-7 h-7 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                 </div>
                             </div>
-                            <img src="https://img.youtube.com/vi/27rpy5018OM/hqdefault.jpg" alt="תגבור כוחות בנהריה" class="w-full h-full object-cover">
+                            <img src="https://img.youtube.com/vi/bj9cZP_s8U8/hqdefault.jpg" alt="פסטיבל תופעת טבע" class="w-full h-full object-cover">
                         </a>
                     </div>
                     <div class="p-4">
-                        <p class="text-gray-600 font-medium leading-relaxed">תגבור כוחות והפעלת חפ״ק חירום בנהריה 2020, כתבה ששודרה אצל אמנון לוי ערוץ 13</p>
+                        <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 mb-2">🎪 פסטיבל</span>
+                        <p class="text-gray-700 font-semibold text-sm leading-relaxed">פסטיבל תופעת טבע</p>
                     </div>
                 </div>
-                <!-- Video 2 -->
-                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+
+                <!-- כתבה 1 -->
+                <div class="video-card bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow" data-cat="כתבה">
+                    <div class="relative aspect-video bg-gray-200">
+                        <a href="https://youtu.be/FVhGrQI3kBc" target="_blank" class="block w-full h-full">
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-colors z-10">
+                                <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-7 h-7 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/FVhGrQI3kBc/hqdefault.jpg" alt="סרטון תדמית תופעת טבע" class="w-full h-full object-cover">
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 mb-2">📺 כתבה</span>
+                        <p class="text-gray-700 font-semibold text-sm leading-relaxed">סרטון תדמית - תופעת טבע</p>
+                    </div>
+                </div>
+
+                <!-- כתבה 2 -->
+                <div class="video-card bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow" data-cat="כתבה">
+                    <div class="relative aspect-video bg-gray-200">
+                        <a href="https://youtu.be/5_Sxn5d8ZFQ" target="_blank" class="block w-full h-full">
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-colors z-10">
+                                <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-7 h-7 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/5_Sxn5d8ZFQ/hqdefault.jpg" alt="כתבה - חדשות סוף שבוע" class="w-full h-full object-cover">
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 mb-2">📺 כתבה</span>
+                        <p class="text-gray-700 font-semibold text-sm leading-relaxed">הכתבה המלאה - חדשות סוף שבוע עם דנה ווייס</p>
+                    </div>
+                </div>
+
+                <!-- שיקום הטבע -->
+                <div class="video-card bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow" data-cat="שיקום הטבע">
+                    <div class="relative aspect-video bg-gray-200">
+                        <a href="https://youtu.be/9RflQM2bG4g" target="_blank" class="block w-full h-full">
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-colors z-10">
+                                <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-7 h-7 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/9RflQM2bG4g/hqdefault.jpg" alt="שיקום חוף פלמחים" class="w-full h-full object-cover">
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700 mb-2">🌿 שיקום הטבע</span>
+                        <p class="text-gray-700 font-semibold text-sm leading-relaxed">חוף פלמחים - שיקום עם עתיד טוב יותר</p>
+                    </div>
+                </div>
+
+                <!-- איתור נעדרים -->
+                <div class="video-card bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow" data-cat="איתור נעדרים">
+                    <div class="relative aspect-video bg-gray-200">
+                        <a href="https://youtu.be/qvQ1ejC5erk" target="_blank" class="block w-full h-full">
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-colors z-10">
+                                <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-7 h-7 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/qvQ1ejC5erk/hqdefault.jpg" alt="מצילים חיים" class="w-full h-full object-cover">
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 mb-2">🔍 איתור נעדרים</span>
+                        <p class="text-gray-700 font-semibold text-sm leading-relaxed">מצילים חיים!</p>
+                    </div>
+                </div>
+
+                <!-- חדשות 1 -->
+                <div class="video-card bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow" data-cat="חדשות">
+                    <div class="relative aspect-video bg-gray-200">
+                        <a href="https://youtu.be/rxOQS4ldkI0" target="_blank" class="block w-full h-full">
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-colors z-10">
+                                <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-7 h-7 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/rxOQS4ldkI0/hqdefault.jpg" alt="חדשות גלי צה״ל" class="w-full h-full object-cover">
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700 mb-2">📰 חדשות</span>
+                        <p class="text-gray-700 font-semibold text-sm leading-relaxed">חדשות גלי צה״ל - משבר הקורונה</p>
+                    </div>
+                </div>
+
+                <!-- חדשות 2 -->
+                <div class="video-card bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow" data-cat="חדשות">
+                    <div class="relative aspect-video bg-gray-200">
+                        <a href="https://youtu.be/jcamQPc6sZ0" target="_blank" class="block w-full h-full">
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-colors z-10">
+                                <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-7 h-7 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                            <img src="https://img.youtube.com/vi/jcamQPc6sZ0/hqdefault.jpg" alt="תוכנית בוקר גלית גוטמן" class="w-full h-full object-cover">
+                        </a>
+                    </div>
+                    <div class="p-4">
+                        <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700 mb-2">📰 חדשות</span>
+                        <p class="text-gray-700 font-semibold text-sm leading-relaxed">תוכנית בוקר - גלית גוטמן ויואב לימור</p>
+                    </div>
+                </div>
+
+                <!-- חדשות 3 -->
+                <div class="video-card bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow" data-cat="חדשות">
                     <div class="relative aspect-video bg-gray-200">
                         <a href="https://youtu.be/croQLPKPxEI" target="_blank" class="block w-full h-full">
-                            <div class="absolute inset-0 flex items-center justify-center bg-gray-800/20 hover:bg-gray-800/40 transition-colors z-10">
-                                <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
-                                    <svg class="w-8 h-8 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-colors z-10">
+                                <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-7 h-7 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                 </div>
                             </div>
-                            <img src="https://img.youtube.com/vi/croQLPKPxEI/hqdefault.jpg" alt="טיול למען חולי סרטן" class="w-full h-full object-cover">
+                            <img src="https://img.youtube.com/vi/croQLPKPxEI/hqdefault.jpg" alt="הצלת חיים - שש עם אמנון לוי" class="w-full h-full object-cover">
                         </a>
                     </div>
                     <div class="p-4">
-                        <p class="text-gray-600 font-medium leading-relaxed">טיול ומפגש למען חולי סרטן של עזר מציון 2018</p>
+                        <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700 mb-2">📰 חדשות</span>
+                        <p class="text-gray-700 font-semibold text-sm leading-relaxed">הצלת חיים - שש עם אמנון לוי</p>
                     </div>
                 </div>
-                <!-- Video 3 -->
-                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+
+                <!-- למען עמותות -->
+                <div class="video-card bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow" data-cat="למען עמותות">
                     <div class="relative aspect-video bg-gray-200">
-                        <a href="https://www.youtube.com/watch?v=5_Sxn5d8ZFQ" target="_blank" class="block w-full h-full">
-                            <div class="absolute inset-0 flex items-center justify-center bg-gray-800/20 hover:bg-gray-800/40 transition-colors z-10">
-                                <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
-                                    <svg class="w-8 h-8 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        <a href="https://youtu.be/NB5kfqbh02A" target="_blank" class="block w-full h-full">
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/40 transition-colors z-10">
+                                <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg">
+                                    <svg class="w-7 h-7 text-white mr-[-2px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                 </div>
                             </div>
-                            <img src="https://img.youtube.com/vi/5_Sxn5d8ZFQ/hqdefault.jpg" alt="כתבה ערוץ 12" class="w-full h-full object-cover">
+                            <img src="https://img.youtube.com/vi/NB5kfqbh02A/hqdefault.jpg" alt="תופעת טבע למען עזר מציון" class="w-full h-full object-cover">
                         </a>
                     </div>
                     <div class="p-4">
-                        <p class="text-gray-600 font-medium leading-relaxed">הכתבה המלאה - חדשות סוף שבוע עם דנה וויס, ערוץ 12</p>
+                        <span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full bg-pink-100 text-pink-700 mb-2">❤️ למען עמותות</span>
+                        <p class="text-gray-700 font-semibold text-sm leading-relaxed">תופעת טבע למען עזר מציון 2021</p>
                     </div>
                 </div>
+
             </div>
-            <!-- More Videos Button -->
+
+            <!-- YouTube channel link -->
             <div class="text-center mt-10">
-                <a href="https://www.youtube.com/channel/UCxxxxxxx" target="_blank" class="inline-block border-2 border-gray-400 text-gray-600 hover:bg-gray-600 hover:text-white px-8 py-3 rounded-md transition-colors font-medium text-lg">לעוד סרטונים</a>
+                <a href="https://www.youtube.com/@tofaatteva-9034" target="_blank" rel="noopener"
+                    class="inline-flex items-center gap-2 border-2 border-red-500 text-red-600 hover:bg-red-600 hover:text-white px-8 py-3 rounded-full transition-all font-bold text-base">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    לערוץ היוטיוב שלנו
+                </a>
             </div>
         </div>
     </section>
+
+    <style>
+        .video-filter-btn { border-color: #d1d5db; color: #6b7280; background: white; }
+        .video-filter-btn:hover { border-color: #6b7280; color: #374151; }
+        .video-filter-btn.active { border-color: #15803d; color: #15803d; background: #f0fdf4; }
+        .video-card.hidden-card { display: none; }
+    </style>
+    <script>
+        function filterVideos(cat) {
+            document.querySelectorAll('.video-filter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-cat="' + cat + '"]').classList.add('active');
+            document.querySelectorAll('.video-card').forEach(card => {
+                if (cat === 'all' || card.dataset.cat === cat) {
+                    card.classList.remove('hidden-card');
+                } else {
+                    card.classList.add('hidden-card');
+                }
+            });
+        }
+    </script>
 
     <!-- Need Help Section -->
     <section class="relative py-20 overflow-hidden">

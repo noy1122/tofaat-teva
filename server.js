@@ -389,29 +389,6 @@ app.get('/api/admin/export', requireAdmin, async (req, res) => {
     } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// ─── Bulk Import (temporary) ─────────────────────────────────────
-app.post('/api/admin/bulk-import', requireAdmin, async (req, res) => {
-    if (!USE_PG) return res.status(400).json({ error: 'Bulk import requires PostgreSQL' });
-    try {
-        const records = req.body;
-        if (!Array.isArray(records)) return res.status(400).json({ error: 'Expected array' });
-        let inserted = 0;
-        for (const d of records) {
-            await pool.query(
-                `INSERT INTO submissions (created_at, first_name, last_name, id_number, gender, phone, city, region, vehicle_type, vehicle_plate, birth_date, occupation, rescue_tools, notes, terms_agreed)
-                 VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)`,
-                [d.created_at || new Date().toISOString(), d.first_name || '', d.last_name || '',
-                 encrypt(d.id_number || ''), d.gender || '', encrypt(d.phone || ''),
-                 d.city || '', d.region || '', d.vehicle_type || '', d.vehicle_plate || '',
-                 encrypt(d.birth_date || ''), d.occupation || '', d.rescue_tools || '',
-                 d.notes || '', d.terms_agreed ? 1 : 0]
-            );
-            inserted++;
-        }
-        res.json({ success: true, inserted });
-    } catch (e) { res.status(500).json({ error: e.message }); }
-});
-
 // ─── Start ───────────────────────────────────────────────────────
 initStorage().then(() => {
     app.listen(PORT, () => {

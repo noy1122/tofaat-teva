@@ -1,7 +1,44 @@
 const express = require('express');
 const session = require('express-session');
+const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs');
+
+// ─── Encryption (AES-256-GCM) ───────────────────────────────────
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY; // 64-char hex = 32 bytes
+
+function encrypt(text) {
+    if (!ENCRYPTION_KEY || !text) return text;
+    try {
+        const key = Buffer.from(ENCRYPTION_KEY, 'hex');
+        const iv = crypto.randomBytes(16);
+        const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
+        let enc = cipher.update(String(text), 'utf8', 'hex');
+        enc += cipher.final('hex');
+        const tag = cipher.getAuthTag().toString('hex');
+        return `enc:${iv.toString('hex')}:${tag}:${enc}`;
+    } catch { return text; }
+}
+
+function decrypt(text) {
+    if (!ENCRYPTION_KEY || !text || !String(text).startsWith('enc:')) return text;
+    try {
+        const key = Buffer.from(ENCRYPTION_KEY, 'hex');
+        const parts = String(text).split(':');
+        const iv = Buffer.from(parts[1], 'hex');
+        const tag = Buffer.from(parts[2], 'hex');
+        const enc = parts[3];
+        const decipher = crypto.createDecipheriv('aes-256-gcm', key, iv);
+        decipher.setAuthTag(tag);
+        let dec = decipher.update(enc, 'hex', 'utf8');
+        dec += decipher.final('utf8');
+        return dec;
+    } catch { return text; }
+}
+
+function decryptSubmission(r) {
+    return { ...r, id_number: decrypt(r.id_number), birth_date: decrypt(r.birth_date), phone: decrypt(r.phone) };
+}
 
 const app = express();
 const PORT = process.env.PORT || 3335;
@@ -125,14 +162,14 @@ app.post('/api/submit', (req, res) => {
             created_at: new Date().toISOString(),
             first_name: d.first_name || '',
             last_name: d.last_name || '',
-            id_number: d.id_number || '',
+            id_number: encrypt(d.id_number || ''),
             gender: d.gender || '',
-            phone: d.phone || '',
+            phone: encrypt(d.phone || ''),
             city: d.city || '',
             region: d.region || '',
             vehicle_type: d.vehicle_type || '',
             vehicle_plate: d.vehicle_plate || '',
-            birth_date: d.birth_date || '',
+            birth_date: encrypt(d.birth_date || ''),
             occupation: d.occupation || '',
             rescue_tools: rescueTools,
             notes: d.notes || '',
@@ -177,6 +214,8 @@ app.get('/api/admin/submissions', requireAdmin, (req, res) => {
     const db = readDB();
     const q = (req.query.q || '').toLowerCase();
     let rows = [...db.submissions].reverse(); // newest first
+
+    rows = rows.map(decryptSubmission);
 
     if (q) {
         rows = rows.filter(r =>
@@ -271,7 +310,7 @@ app.get('/api/admin/analytics', requireAdmin, (req, res) => {
 
 app.get('/api/admin/export', requireAdmin, (req, res) => {
     const db = readDB();
-    const rows = [...db.submissions].reverse();
+    const rows = [...db.submissions].reverse().map(decryptSubmission);
 
     const headers = ['מזהה', 'תאריך הצטרפות', 'שם פרטי', 'שם משפחה', 'תעודת זהות', 'מין', 'טלפון', 'עיר', 'איזור', 'סוג רכב', 'מספר רכב', 'תאריך לידה', 'תחום עיסוק', 'כלי חילוץ', 'הערות'];
     const escape = v => `"${String(v ?? '').replace(/"/g, '""')}"`;

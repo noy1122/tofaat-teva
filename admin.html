@@ -6,6 +6,7 @@
     <title>פאנל ניהול - תופעת טבע</title>
     <link rel="icon" href="images/logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -135,6 +136,11 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     חברים
                 </button>
+                <button id="tab-stats" onclick="switchTab('stats')"
+                    class="tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/></svg>
+                    סטטיסטיקות
+                </button>
                 <button id="tab-analytics" onclick="switchTab('analytics')"
                     class="tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
@@ -196,7 +202,7 @@
                     <table class="w-full text-sm">
                         <thead>
                             <tr class="bg-gray-50 border-b border-gray-200">
-                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('id')" data-col="id"># <span class="sort-arrow">▼</span></th>
+                                <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50">#</th>
                                 <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap sortable sorted-desc" onclick="sortTable('created_at')" data-col="created_at">תאריך ושעה <span class="sort-arrow">▼</span></th>
                                 <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 whitespace-nowrap sortable" onclick="sortTable('name')" data-col="name">שם מלא <span class="sort-arrow">▼</span></th>
                                 <th class="px-4 py-3 text-right font-semibold text-gray-600 bg-gray-50 sortable" onclick="sortTable('id_number')" data-col="id_number">ת.ז. <span class="sort-arrow">▼</span></th>
@@ -214,7 +220,85 @@
                         </thead>
                         <tbody id="table-body"></tbody>
                     </table>
-                    <div id="table-count" class="px-4 py-3 border-t border-gray-100 text-xs text-gray-400 text-left"></div>
+                    <div id="table-footer" class="px-4 py-3 border-t border-gray-200 bg-gray-50/50">
+                        <div class="flex flex-wrap items-center justify-between gap-3 text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-500 text-xs">הצג</span>
+                                <select id="page-size" onchange="changePageSize(this.value)" class="border border-gray-300 rounded-lg px-2 py-1.5 text-xs bg-white focus:border-green-500 outline-none cursor-pointer">
+                                    <option value="25" selected>25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="250">250</option>
+                                    <option value="500">500</option>
+                                </select>
+                                <span class="text-gray-500 text-xs">בעמוד</span>
+                                <span class="text-gray-300 mx-1">|</span>
+                                <span id="page-info" class="text-gray-500 text-xs font-medium"></span>
+                            </div>
+                            <div class="flex items-center gap-0.5" id="page-nav"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ TAB: סטטיסטיקות חברים ══ -->
+        <div id="section-stats" class="hidden">
+            <div id="stats-loading" class="flex items-center justify-center py-16"><div class="loader"></div></div>
+            <div id="stats-content" class="hidden">
+                <!-- Row 1: Gender pie + Birth Year bar -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+                    <div class="bg-white rounded-xl shadow-sm p-5">
+                        <h3 class="font-bold text-gray-700 mb-3 flex items-center gap-2 text-sm">
+                            <span class="w-2.5 h-2.5 rounded-full bg-pink-400"></span> התפלגות מין
+                        </h3>
+                        <div style="max-height:260px" class="flex items-center justify-center"><canvas id="chart-gender"></canvas></div>
+                    </div>
+                    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-5">
+                        <h3 class="font-bold text-gray-700 mb-3 flex items-center gap-2 text-sm">
+                            <span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span> התפלגות שנת לידה
+                        </h3>
+                        <div style="max-height:260px"><canvas id="chart-birthyear"></canvas></div>
+                    </div>
+                </div>
+                <!-- Row 2: Rescue tools + Vehicle type -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+                    <div class="bg-white rounded-xl shadow-sm p-5">
+                        <h3 class="font-bold text-gray-700 mb-3 flex items-center gap-2 text-sm">
+                            <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> כלי חילוץ שברשותי
+                        </h3>
+                        <div style="max-height:280px"><canvas id="chart-rescue"></canvas></div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-5">
+                        <h3 class="font-bold text-gray-700 mb-3 flex items-center gap-2 text-sm">
+                            <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span> סוג רכב
+                        </h3>
+                        <div style="max-height:280px"><canvas id="chart-vehicle"></canvas></div>
+                    </div>
+                </div>
+                <!-- Row 3: Region + City -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
+                    <div class="bg-white rounded-xl shadow-sm p-5">
+                        <h3 class="font-bold text-gray-700 mb-3 flex items-center gap-2 text-sm">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span> איזור קבוצה משפחתית
+                        </h3>
+                        <div style="max-height:320px"><canvas id="chart-region"></canvas></div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-5">
+                        <h3 class="font-bold text-gray-700 mb-3 flex items-center gap-2 text-sm">
+                            <span class="w-2.5 h-2.5 rounded-full bg-violet-400"></span> עיר מגורים (טופ 20)
+                        </h3>
+                        <div style="max-height:320px"><canvas id="chart-city"></canvas></div>
+                    </div>
+                </div>
+                <!-- Row 4: Occupation -->
+                <div class="grid grid-cols-1 gap-4 mb-4">
+                    <div class="bg-white rounded-xl shadow-sm p-5">
+                        <h3 class="font-bold text-gray-700 mb-3 flex items-center gap-2 text-sm">
+                            <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span> תחום עיסוק (טופ 20)
+                        </h3>
+                        <div style="max-height:350px"><canvas id="chart-occupation"></canvas></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -361,18 +445,23 @@ let deleteTargetId = null;
 let searchTimeout = null;
 let currentSortCol = 'created_at';
 let currentSortDir = 'desc';
+let currentPage = 1;
+let pageSize = 25;
 
 // ─── Tabs ─────────────────────────────────────────────────
 function switchTab(tab) {
     document.getElementById('section-members').classList.toggle('hidden', tab !== 'members');
+    document.getElementById('section-stats').classList.toggle('hidden', tab !== 'stats');
     document.getElementById('section-analytics').classList.toggle('hidden', tab !== 'analytics');
-    document.getElementById('tab-members').className = tab === 'members'
-        ? 'tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-green-600 text-green-700 transition-colors flex items-center gap-2'
-        : 'tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-2';
-    document.getElementById('tab-analytics').className = tab === 'analytics'
-        ? 'tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-sky-600 text-sky-700 transition-colors flex items-center gap-2'
-        : 'tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-2';
+    const base = 'tab-btn px-6 py-3.5 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2';
+    const tabStyles = { members: 'border-green-600 text-green-700', stats: 'border-purple-600 text-purple-700', analytics: 'border-sky-600 text-sky-700' };
+    ['members', 'stats', 'analytics'].forEach(t => {
+        document.getElementById('tab-' + t).className = t === tab
+            ? `${base} ${tabStyles[t]}`
+            : `${base} border-transparent text-gray-500 hover:text-gray-700`;
+    });
     if (tab === 'analytics') loadAnalytics();
+    if (tab === 'stats') loadMemberStats();
 }
 
 // ─── Auth ────────────────────────────────────────────────
@@ -463,6 +552,7 @@ async function loadSubmissions(query = '') {
         const url = query ? `/api/admin/submissions?q=${encodeURIComponent(query)}` : '/api/admin/submissions';
         const res = await fetch(url);
         allSubmissions = await res.json();
+        currentPage = 1;
         renderTable(allSubmissions);
     } catch (e) {
         setTableState('empty');
@@ -498,6 +588,7 @@ function sortTable(col) {
         const arrow = activeTh.querySelector('.sort-arrow');
         if (arrow) arrow.textContent = currentSortDir === 'asc' ? '▲' : '▼';
     }
+    currentPage = 1;
     renderTable(allSubmissions);
 }
 
@@ -508,6 +599,8 @@ function renderTable(rows) {
     if (rows.length === 0) {
         const query = document.getElementById('search-input').value.trim();
         setTableState(query ? 'no-results' : 'empty');
+        document.getElementById('page-info').textContent = '';
+        document.getElementById('page-nav').innerHTML = '';
         return;
     }
 
@@ -517,12 +610,12 @@ function renderTable(rows) {
         if (currentSortCol === 'name') {
             valA = ((a.first_name || '') + ' ' + (a.last_name || '')).trim().toLowerCase();
             valB = ((b.first_name || '') + ' ' + (b.last_name || '')).trim().toLowerCase();
+        } else if (currentSortCol === 'created_at') {
+            valA = new Date(a.created_at || 0).getTime();
+            valB = new Date(b.created_at || 0).getTime();
         } else if (currentSortCol === 'id') {
             valA = a.id || 0;
             valB = b.id || 0;
-        } else if (currentSortCol === 'created_at') {
-            valA = a.created_at || '';
-            valB = b.created_at || '';
         } else {
             valA = (a[currentSortCol] || '').toString().toLowerCase();
             valB = (b[currentSortCol] || '').toString().toLowerCase();
@@ -536,8 +629,18 @@ function renderTable(rows) {
         return currentSortDir === 'asc' ? cmp : -cmp;
     });
 
+    // Pagination
+    const totalRows = sorted.length;
+    const totalPages = Math.max(1, Math.ceil(totalRows / pageSize));
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+    const startIdx = (currentPage - 1) * pageSize;
+    const endIdx = Math.min(startIdx + pageSize, totalRows);
+    const pageRows = sorted.slice(startIdx, endIdx);
+
     setTableState('data');
-    sorted.forEach(r => {
+    pageRows.forEach((r, i) => {
+        const rowNum = startIdx + i + 1;
         const tr = document.createElement('tr');
         tr.className = 'border-b border-gray-100 cursor-pointer';
         tr.title = 'לחץ לפרטים מלאים';
@@ -551,9 +654,10 @@ function renderTable(rows) {
             : r.gender === 'נקבה'
             ? '<span class="badge bg-pink-100 text-pink-700">נקבה</span>'
             : `<span class="badge bg-gray-100 text-gray-600">${r.gender || '-'}</span>`;
+        const safeName = (r.first_name + ' ' + r.last_name).replace(/'/g, "\\'").replace(/"/g, '&quot;');
 
         tr.innerHTML = `
-            <td class="px-4 py-3 text-gray-400 text-xs">${r.id}</td>
+            <td class="px-4 py-3 text-gray-400 text-xs font-mono">${rowNum}</td>
             <td class="px-4 py-3 text-gray-600 whitespace-nowrap text-xs">${dateStr}</td>
             <td class="px-4 py-3 font-semibold text-gray-800 whitespace-nowrap">${r.first_name || ''} ${r.last_name || ''}</td>
             <td class="px-4 py-3 text-gray-600 font-mono text-xs">${r.id_number || '-'}</td>
@@ -564,10 +668,10 @@ function renderTable(rows) {
             <td class="px-4 py-3 text-gray-600 whitespace-nowrap text-xs">${r.vehicle_type || '-'}</td>
             <td class="px-4 py-3 text-gray-600 font-mono text-xs">${r.vehicle_plate || '-'}</td>
             <td class="px-4 py-3 text-gray-600 whitespace-nowrap text-xs">${r.birth_date || '-'}</td>
-            <td class="px-4 py-3 text-gray-600 text-xs max-w-[140px] truncate" title="${r.rescue_tools || ''}">${r.rescue_tools || '-'}</td>
-            <td class="px-4 py-3 text-gray-500 text-xs max-w-[120px] truncate" title="${r.notes || ''}">${r.notes || '-'}</td>
+            <td class="px-4 py-3 text-gray-600 text-xs max-w-[140px] truncate" title="${(r.rescue_tools || '').replace(/"/g, '&quot;')}">${r.rescue_tools || '-'}</td>
+            <td class="px-4 py-3 text-gray-500 text-xs max-w-[120px] truncate" title="${(r.notes || '').replace(/"/g, '&quot;')}">${r.notes || '-'}</td>
             <td class="px-4 py-3">
-                <button onclick="openDeleteModal(${r.id}, '${(r.first_name + ' ' + r.last_name).replace(/'/g, "\\'")}')"
+                <button onclick="openDeleteModal(${r.id}, '${safeName}')"
                     class="text-red-400 hover:text-red-600 hover:bg-red-50 p-1.5 rounded-lg transition-colors" title="מחק">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                 </button>
@@ -576,7 +680,46 @@ function renderTable(rows) {
         tbody.appendChild(tr);
     });
 
-    document.getElementById('table-count').textContent = `מציג ${rows.length} רשומות`;
+    // Update pagination
+    document.getElementById('page-info').textContent = `מציג ${(startIdx + 1).toLocaleString()}-${endIdx.toLocaleString()} מתוך ${totalRows.toLocaleString()}`;
+    renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+    const nav = document.getElementById('page-nav');
+    if (totalPages <= 1) { nav.innerHTML = ''; return; }
+    const btnClass = 'px-2.5 py-1 rounded-lg text-xs font-medium transition-colors';
+    const mkBtn = (label, page, active, disabled) => {
+        if (disabled) return `<button class="${btnClass} text-gray-300 cursor-default" disabled>${label}</button>`;
+        if (active) return `<button class="${btnClass} bg-green-600 text-white shadow-sm">${label}</button>`;
+        return `<button onclick="changePage(${page})" class="${btnClass} hover:bg-gray-100 text-gray-600">${label}</button>`;
+    };
+    let html = mkBtn('«', 1, false, currentPage === 1);
+    html += mkBtn('‹', currentPage - 1, false, currentPage === 1);
+    let startP = Math.max(1, currentPage - 2);
+    let endP = Math.min(totalPages, currentPage + 2);
+    if (endP - startP < 4) {
+        if (startP === 1) endP = Math.min(totalPages, 5);
+        else startP = Math.max(1, totalPages - 4);
+    }
+    if (startP > 1) { html += mkBtn('1', 1, false, false); if (startP > 2) html += '<span class="px-1 text-gray-300 text-xs">…</span>'; }
+    for (let p = startP; p <= endP; p++) html += mkBtn(p, p, p === currentPage, false);
+    if (endP < totalPages) { if (endP < totalPages - 1) html += '<span class="px-1 text-gray-300 text-xs">…</span>'; html += mkBtn(totalPages, totalPages, false, false); }
+    html += mkBtn('›', currentPage + 1, false, currentPage === totalPages);
+    html += mkBtn('»', totalPages, false, currentPage === totalPages);
+    nav.innerHTML = html;
+}
+
+function changePage(page) {
+    currentPage = page;
+    renderTable(allSubmissions);
+    document.getElementById('table-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function changePageSize(size) {
+    pageSize = parseInt(size);
+    currentPage = 1;
+    renderTable(allSubmissions);
 }
 
 function setTableState(state) {
@@ -724,6 +867,89 @@ async function loadAnalytics() {
         document.getElementById('a-recent').classList.remove('hidden');
     } catch (e) {
         document.getElementById('a-loading').innerHTML = '<p class="text-gray-400 text-sm">שגיאה בטעינת נתונים</p>';
+    }
+}
+
+// ─── Member Stats Charts ──────────────────────────────────
+let chartsLoaded = false;
+const chartInstances = {};
+
+async function loadMemberStats() {
+    if (chartsLoaded) return;
+    document.getElementById('stats-loading').classList.remove('hidden');
+    document.getElementById('stats-content').classList.add('hidden');
+    try {
+        const res = await fetch('/api/admin/member-stats');
+        const data = await res.json();
+
+        const colors = {
+            bg: ['rgba(34,197,94,0.7)','rgba(59,130,246,0.7)','rgba(168,85,247,0.7)','rgba(249,115,22,0.7)','rgba(236,72,153,0.7)','rgba(20,184,166,0.7)','rgba(245,158,11,0.7)','rgba(99,102,241,0.7)','rgba(239,68,68,0.7)','rgba(107,114,128,0.7)'],
+            border: ['rgb(34,197,94)','rgb(59,130,246)','rgb(168,85,247)','rgb(249,115,22)','rgb(236,72,153)','rgb(20,184,166)','rgb(245,158,11)','rgb(99,102,241)','rgb(239,68,68)','rgb(107,114,128)']
+        };
+        const defaults = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
+
+        // Gender - Doughnut
+        const gLabels = Object.keys(data.gender);
+        const gValues = Object.values(data.gender);
+        chartInstances.gender = new Chart(document.getElementById('chart-gender'), {
+            type: 'doughnut',
+            data: { labels: gLabels, datasets: [{ data: gValues, backgroundColor: ['rgba(59,130,246,0.7)','rgba(236,72,153,0.7)','rgba(168,85,247,0.7)','rgba(107,114,128,0.7)'], borderWidth: 2, borderColor: '#fff' }] },
+            options: { ...defaults, plugins: { legend: { display: true, position: 'bottom', rtl: true, labels: { font: { family: 'Heebo', size: 12 }, padding: 12 } } }, cutout: '55%' }
+        });
+
+        // Birth Year - Bar (sorted by year)
+        const byEntries = Object.entries(data.birth_year).sort((a,b) => a[0] - b[0]);
+        chartInstances.birthyear = new Chart(document.getElementById('chart-birthyear'), {
+            type: 'bar',
+            data: { labels: byEntries.map(e=>e[0]), datasets: [{ data: byEntries.map(e=>e[1]), backgroundColor: 'rgba(99,102,241,0.6)', borderColor: 'rgb(99,102,241)', borderWidth: 1, borderRadius: 3 }] },
+            options: { ...defaults, scales: { y: { beginAtZero: true, ticks: { font: { family: 'Heebo' } } }, x: { ticks: { font: { family: 'Heebo', size: 10 }, maxRotation: 45 } } } }
+        });
+
+        // Rescue Tools - Horizontal bar
+        const rtEntries = Object.entries(data.rescue_tools).sort((a,b) => b[1]-a[1]);
+        chartInstances.rescue = new Chart(document.getElementById('chart-rescue'), {
+            type: 'bar',
+            data: { labels: rtEntries.map(e=>e[0]), datasets: [{ data: rtEntries.map(e=>e[1]), backgroundColor: 'rgba(245,158,11,0.6)', borderColor: 'rgb(245,158,11)', borderWidth: 1, borderRadius: 3 }] },
+            options: { ...defaults, indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { font: { family: 'Heebo' } } }, y: { ticks: { font: { family: 'Heebo', size: 11 } } } } }
+        });
+
+        // Vehicle - Horizontal bar (top 15)
+        const vEntries = Object.entries(data.vehicle_type).sort((a,b) => b[1]-a[1]).slice(0, 15);
+        chartInstances.vehicle = new Chart(document.getElementById('chart-vehicle'), {
+            type: 'bar',
+            data: { labels: vEntries.map(e=>e[0]), datasets: [{ data: vEntries.map(e=>e[1]), backgroundColor: 'rgba(14,165,233,0.6)', borderColor: 'rgb(14,165,233)', borderWidth: 1, borderRadius: 3 }] },
+            options: { ...defaults, indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { font: { family: 'Heebo' } } }, y: { ticks: { font: { family: 'Heebo', size: 11 } } } } }
+        });
+
+        // Region - Horizontal bar
+        const regEntries = Object.entries(data.region).sort((a,b) => b[1]-a[1]);
+        chartInstances.region = new Chart(document.getElementById('chart-region'), {
+            type: 'bar',
+            data: { labels: regEntries.map(e=>e[0]), datasets: [{ data: regEntries.map(e=>e[1]), backgroundColor: 'rgba(16,185,129,0.6)', borderColor: 'rgb(16,185,129)', borderWidth: 1, borderRadius: 3 }] },
+            options: { ...defaults, indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { font: { family: 'Heebo' } } }, y: { ticks: { font: { family: 'Heebo', size: 11 } } } } }
+        });
+
+        // City - Horizontal bar (top 20)
+        const cityEntries = Object.entries(data.city).sort((a,b) => b[1]-a[1]).slice(0, 20);
+        chartInstances.city = new Chart(document.getElementById('chart-city'), {
+            type: 'bar',
+            data: { labels: cityEntries.map(e=>e[0]), datasets: [{ data: cityEntries.map(e=>e[1]), backgroundColor: 'rgba(139,92,246,0.6)', borderColor: 'rgb(139,92,246)', borderWidth: 1, borderRadius: 3 }] },
+            options: { ...defaults, indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { font: { family: 'Heebo' } } }, y: { ticks: { font: { family: 'Heebo', size: 11 } } } } }
+        });
+
+        // Occupation - Horizontal bar (top 20)
+        const occEntries = Object.entries(data.occupation).sort((a,b) => b[1]-a[1]).slice(0, 20);
+        chartInstances.occupation = new Chart(document.getElementById('chart-occupation'), {
+            type: 'bar',
+            data: { labels: occEntries.map(e=>e[0]), datasets: [{ data: occEntries.map(e=>e[1]), backgroundColor: 'rgba(244,63,94,0.6)', borderColor: 'rgb(244,63,94)', borderWidth: 1, borderRadius: 3 }] },
+            options: { ...defaults, indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { font: { family: 'Heebo' } } }, y: { ticks: { font: { family: 'Heebo', size: 11 } } } } }
+        });
+
+        chartsLoaded = true;
+        document.getElementById('stats-loading').classList.add('hidden');
+        document.getElementById('stats-content').classList.remove('hidden');
+    } catch (e) {
+        document.getElementById('stats-loading').innerHTML = '<p class="text-gray-400 text-sm">שגיאה בטעינת נתונים</p>';
     }
 }
 

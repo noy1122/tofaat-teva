@@ -37,7 +37,7 @@ function decrypt(text) {
 }
 
 function decryptRow(r) {
-    return { ...r, id_number: decrypt(r.id_number), birth_date: decrypt(r.birth_date), phone: decrypt(r.phone) };
+    return { ...r, id_number: decrypt(r.id_number), birth_date: decrypt(r.birth_date), phone: decrypt(r.phone), vehicle_plate: decrypt(r.vehicle_plate) };
 }
 
 // ─── Storage Layer ───────────────────────────────────────────────
@@ -255,8 +255,8 @@ const PORT = process.env.PORT || 3335;
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'tofaat2024';
 
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(express.json({ limit: '2mb' }));
+app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 app.use(session({
     secret: process.env.SESSION_SECRET || 'tofaat-dev-secret-2024',
     resave: false,
@@ -317,7 +317,7 @@ app.post('/api/submit', async (req, res) => {
             first_name: d.first_name || '', last_name: d.last_name || '',
             id_number: encrypt(d.id_number || ''), gender: d.gender || '',
             phone: encrypt(d.phone || ''), city: d.city || '', region: d.region || '',
-            vehicle_type: d.vehicle_type || '', vehicle_plate: d.vehicle_plate || '',
+            vehicle_type: d.vehicle_type || '', vehicle_plate: encrypt(d.vehicle_plate || ''),
             birth_date: encrypt(d.birth_date || ''), occupation: d.occupation || '',
             rescue_tools: rescueTools, notes: d.notes || '',
             terms_agreed: d.terms_agreed ? 1 : 0
@@ -370,6 +370,35 @@ app.delete('/api/admin/submissions/:id', requireAdmin, async (req, res) => {
 app.get('/api/admin/analytics', requireAdmin, async (req, res) => {
     try { res.json(await dbGetAnalytics()); }
     catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/admin/member-stats', requireAdmin, async (req, res) => {
+    try {
+        const rows = await dbGetSubmissions(null);
+        const stats = { gender: {}, city: {}, region: {}, vehicle_type: {}, rescue_tools: {}, occupation: {}, birth_year: {} };
+        rows.forEach(r => {
+            if (r.gender) stats.gender[r.gender] = (stats.gender[r.gender] || 0) + 1;
+            if (r.city) stats.city[r.city] = (stats.city[r.city] || 0) + 1;
+            if (r.region) stats.region[r.region] = (stats.region[r.region] || 0) + 1;
+            if (r.vehicle_type) stats.vehicle_type[r.vehicle_type] = (stats.vehicle_type[r.vehicle_type] || 0) + 1;
+            if (r.occupation) stats.occupation[r.occupation] = (stats.occupation[r.occupation] || 0) + 1;
+            // Rescue tools - split by comma
+            if (r.rescue_tools) {
+                r.rescue_tools.split(',').map(t => t.trim()).filter(Boolean).forEach(tool => {
+                    stats.rescue_tools[tool] = (stats.rescue_tools[tool] || 0) + 1;
+                });
+            }
+            // Birth year
+            if (r.birth_date) {
+                const match = r.birth_date.match(/(\d{4})/);
+                if (match) {
+                    const year = match[1];
+                    stats.birth_year[year] = (stats.birth_year[year] || 0) + 1;
+                }
+            }
+        });
+        res.json(stats);
+    } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.get('/api/admin/export', requireAdmin, async (req, res) => {

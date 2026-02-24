@@ -3,6 +3,7 @@ const session = require('express-session');
 const crypto = require('crypto');
 const path = require('path');
 const fs = require('fs');
+const ExcelJS = require('exceljs');
 
 // ─── Encryption (AES-256-GCM) ───────────────────────────────────
 const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY;
@@ -405,16 +406,91 @@ app.get('/api/admin/export', requireAdmin, async (req, res) => {
     try {
         const rows = await dbGetSubmissions(null);
         const headers = ['מזהה', 'תאריך הצטרפות', 'שם פרטי', 'שם משפחה', 'תעודת זהות', 'מין', 'טלפון', 'עיר', 'איזור', 'סוג רכב', 'מספר רכב', 'תאריך לידה', 'תחום עיסוק', 'כלי חילוץ', 'הערות'];
-        const escape = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
-        const csvRows = rows.map(r => [
-            r.id, r.created_at, r.first_name, r.last_name, r.id_number,
-            r.gender, r.phone, r.city, r.region, r.vehicle_type,
-            r.vehicle_plate, r.birth_date, r.occupation, r.rescue_tools, r.notes
-        ].map(escape).join(','));
-        const csv = '\uFEFF' + [headers.join(','), ...csvRows].join('\r\n');
-        res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-        res.setHeader('Content-Disposition', `attachment; filename="tofaat-teva-${new Date().toISOString().split('T')[0]}.csv"`);
-        res.send(csv);
+
+        const workbook = new ExcelJS.Workbook();
+        workbook.creator = 'תופעת טבע';
+        workbook.created = new Date();
+
+        const sheet = workbook.addWorksheet('חברים', {
+            views: [{ rightToLeft: true, state: 'frozen', ySplit: 1 }],
+            properties: { defaultRowHeight: 22 }
+        });
+
+        // Define columns with widths
+        sheet.columns = [
+            { header: headers[0],  key: 'id',            width: 8  },
+            { header: headers[1],  key: 'created_at',    width: 18 },
+            { header: headers[2],  key: 'first_name',    width: 14 },
+            { header: headers[3],  key: 'last_name',     width: 14 },
+            { header: headers[4],  key: 'id_number',     width: 14 },
+            { header: headers[5],  key: 'gender',        width: 8  },
+            { header: headers[6],  key: 'phone',         width: 14 },
+            { header: headers[7],  key: 'city',          width: 14 },
+            { header: headers[8],  key: 'region',        width: 12 },
+            { header: headers[9],  key: 'vehicle_type',  width: 12 },
+            { header: headers[10], key: 'vehicle_plate', width: 12 },
+            { header: headers[11], key: 'birth_date',    width: 14 },
+            { header: headers[12], key: 'occupation',    width: 14 },
+            { header: headers[13], key: 'rescue_tools',  width: 16 },
+            { header: headers[14], key: 'notes',         width: 20 },
+        ];
+
+        // Style header row
+        const headerRow = sheet.getRow(1);
+        headerRow.height = 30;
+        headerRow.eachCell(cell => {
+            cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2E7D32' } };
+            cell.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 12, name: 'Arial' };
+            cell.alignment = { horizontal: 'right', vertical: 'middle', readingOrder: 'rtl' };
+            cell.border = {
+                top: { style: 'thin', color: { argb: 'FF1B5E20' } },
+                bottom: { style: 'medium', color: { argb: 'FF1B5E20' } },
+                left: { style: 'thin', color: { argb: 'FF1B5E20' } },
+                right: { style: 'thin', color: { argb: 'FF1B5E20' } }
+            };
+        });
+
+        // Add data rows with alternating colors
+        rows.forEach((r, i) => {
+            const dataRow = sheet.addRow({
+                id: r.id,
+                created_at: r.created_at,
+                first_name: r.first_name,
+                last_name: r.last_name,
+                id_number: r.id_number,
+                gender: r.gender,
+                phone: r.phone,
+                city: r.city,
+                region: r.region,
+                vehicle_type: r.vehicle_type,
+                vehicle_plate: r.vehicle_plate,
+                birth_date: r.birth_date,
+                occupation: r.occupation,
+                rescue_tools: r.rescue_tools,
+                notes: r.notes
+            });
+
+            const bgColor = i % 2 === 0 ? 'FFF1F8E9' : 'FFFFFFFF';
+            dataRow.eachCell({ includeEmpty: true }, cell => {
+                cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bgColor } };
+                cell.font = { size: 11, name: 'Arial' };
+                cell.alignment = { horizontal: 'right', vertical: 'middle', readingOrder: 'rtl' };
+                cell.border = {
+                    top: { style: 'thin', color: { argb: 'FFE0E0E0' } },
+                    bottom: { style: 'thin', color: { argb: 'FFE0E0E0' } },
+                    left: { style: 'thin', color: { argb: 'FFE0E0E0' } },
+                    right: { style: 'thin', color: { argb: 'FFE0E0E0' } }
+                };
+            });
+        });
+
+        // Auto-filter on header
+        sheet.autoFilter = { from: 'A1', to: `O1` };
+
+        const buffer = await workbook.xlsx.writeBuffer();
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', `attachment; filename="tofaat-teva-${new Date().toISOString().split('T')[0]}.xlsx"`);
+        res.send(buffer);
     } catch (e) { res.status(500).json({ error: e.message }); }
 });
 

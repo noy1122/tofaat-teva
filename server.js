@@ -407,91 +407,51 @@ app.get('/api/admin/export', requireAdmin, async (req, res) => {
         const rows = await dbGetSubmissions(null);
         const headers = ['מזהה', 'תאריך הצטרפות', 'שם פרטי', 'שם משפחה', 'תעודת זהות', 'מין', 'טלפון', 'עיר', 'איזור', 'סוג רכב', 'מספר רכב', 'תאריך לידה', 'תחום עיסוק', 'כלי חילוץ', 'הערות'];
 
-        const workbook = new ExcelJS.Workbook();
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', `attachment; filename="tofaat-teva-${new Date().toISOString().split('T')[0]}.xlsx"`);
+
+        const workbook = new ExcelJS.stream.xlsx.WorkbookWriter({ stream: res, useStyles: true });
         workbook.creator = 'תופעת טבע';
-        workbook.created = new Date();
 
         const sheet = workbook.addWorksheet('חברים', {
             views: [{ rightToLeft: true, state: 'frozen', ySplit: 1 }],
             properties: { defaultRowHeight: 22 }
         });
 
-        // Define columns with widths
-        sheet.columns = [
-            { header: headers[0],  key: 'id',            width: 8  },
-            { header: headers[1],  key: 'created_at',    width: 18 },
-            { header: headers[2],  key: 'first_name',    width: 14 },
-            { header: headers[3],  key: 'last_name',     width: 14 },
-            { header: headers[4],  key: 'id_number',     width: 14 },
-            { header: headers[5],  key: 'gender',        width: 8  },
-            { header: headers[6],  key: 'phone',         width: 14 },
-            { header: headers[7],  key: 'city',          width: 14 },
-            { header: headers[8],  key: 'region',        width: 12 },
-            { header: headers[9],  key: 'vehicle_type',  width: 12 },
-            { header: headers[10], key: 'vehicle_plate', width: 12 },
-            { header: headers[11], key: 'birth_date',    width: 14 },
-            { header: headers[12], key: 'occupation',    width: 14 },
-            { header: headers[13], key: 'rescue_tools',  width: 16 },
-            { header: headers[14], key: 'notes',         width: 20 },
-        ];
+        const colWidths = [8, 18, 14, 14, 14, 8, 14, 14, 12, 12, 12, 14, 14, 16, 20];
+        const colKeys = ['id','created_at','first_name','last_name','id_number','gender','phone','city','region','vehicle_type','vehicle_plate','birth_date','occupation','rescue_tools','notes'];
+        sheet.columns = headers.map((h, i) => ({ header: h, key: colKeys[i], width: colWidths[i] }));
+
+        // Reusable styles
+        const headerFill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2E7D32' } };
+        const headerFont = { bold: true, color: { argb: 'FFFFFFFF' }, size: 12, name: 'Arial' };
+        const rtlAlign = { horizontal: 'right', vertical: 'middle', readingOrder: 'rtl' };
+        const headerBorder = { top: { style: 'thin', color: { argb: 'FF1B5E20' } }, bottom: { style: 'medium', color: { argb: 'FF1B5E20' } }, left: { style: 'thin', color: { argb: 'FF1B5E20' } }, right: { style: 'thin', color: { argb: 'FF1B5E20' } } };
+        const dataBorder = { top: { style: 'thin', color: { argb: 'FFE0E0E0' } }, bottom: { style: 'thin', color: { argb: 'FFE0E0E0' } }, left: { style: 'thin', color: { argb: 'FFE0E0E0' } }, right: { style: 'thin', color: { argb: 'FFE0E0E0' } } };
+        const dataFont = { size: 11, name: 'Arial' };
+        const evenFill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F8E9' } };
+        const oddFill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFFFFF' } };
 
         // Style header row
         const headerRow = sheet.getRow(1);
         headerRow.height = 30;
-        headerRow.eachCell(cell => {
-            cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2E7D32' } };
-            cell.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 12, name: 'Arial' };
-            cell.alignment = { horizontal: 'right', vertical: 'middle', readingOrder: 'rtl' };
-            cell.border = {
-                top: { style: 'thin', color: { argb: 'FF1B5E20' } },
-                bottom: { style: 'medium', color: { argb: 'FF1B5E20' } },
-                left: { style: 'thin', color: { argb: 'FF1B5E20' } },
-                right: { style: 'thin', color: { argb: 'FF1B5E20' } }
-            };
-        });
+        headerRow.eachCell(cell => { cell.fill = headerFill; cell.font = headerFont; cell.alignment = rtlAlign; cell.border = headerBorder; });
+        headerRow.commit();
 
-        // Add data rows with alternating colors
-        rows.forEach((r, i) => {
-            const dataRow = sheet.addRow({
-                id: r.id,
-                created_at: r.created_at,
-                first_name: r.first_name,
-                last_name: r.last_name,
-                id_number: r.id_number,
-                gender: r.gender,
-                phone: r.phone,
-                city: r.city,
-                region: r.region,
-                vehicle_type: r.vehicle_type,
-                vehicle_plate: r.vehicle_plate,
-                birth_date: r.birth_date,
-                occupation: r.occupation,
-                rescue_tools: r.rescue_tools,
-                notes: r.notes
-            });
+        // Stream data rows one by one
+        for (let i = 0; i < rows.length; i++) {
+            const r = rows[i];
+            const dataRow = sheet.addRow({ id: r.id, created_at: r.created_at, first_name: r.first_name, last_name: r.last_name, id_number: r.id_number, gender: r.gender, phone: r.phone, city: r.city, region: r.region, vehicle_type: r.vehicle_type, vehicle_plate: r.vehicle_plate, birth_date: r.birth_date, occupation: r.occupation, rescue_tools: r.rescue_tools, notes: r.notes });
+            const fill = i % 2 === 0 ? evenFill : oddFill;
+            dataRow.eachCell({ includeEmpty: true }, cell => { cell.fill = fill; cell.font = dataFont; cell.alignment = rtlAlign; cell.border = dataBorder; });
+            dataRow.commit();
+        }
 
-            const bgColor = i % 2 === 0 ? 'FFF1F8E9' : 'FFFFFFFF';
-            dataRow.eachCell({ includeEmpty: true }, cell => {
-                cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: bgColor } };
-                cell.font = { size: 11, name: 'Arial' };
-                cell.alignment = { horizontal: 'right', vertical: 'middle', readingOrder: 'rtl' };
-                cell.border = {
-                    top: { style: 'thin', color: { argb: 'FFE0E0E0' } },
-                    bottom: { style: 'thin', color: { argb: 'FFE0E0E0' } },
-                    left: { style: 'thin', color: { argb: 'FFE0E0E0' } },
-                    right: { style: 'thin', color: { argb: 'FFE0E0E0' } }
-                };
-            });
-        });
-
-        // Auto-filter on header
-        sheet.autoFilter = { from: 'A1', to: `O1` };
-
-        const buffer = await workbook.xlsx.writeBuffer();
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        res.setHeader('Content-Disposition', `attachment; filename="tofaat-teva-${new Date().toISOString().split('T')[0]}.xlsx"`);
-        res.send(buffer);
-    } catch (e) { res.status(500).json({ error: e.message }); }
+        sheet.autoFilter = { from: 'A1', to: 'O1' };
+        await workbook.commit();
+    } catch (e) {
+        if (!res.headersSent) res.status(500).json({ error: e.message });
+    }
 });
 
 // ─── Start ───────────────────────────────────────────────────────

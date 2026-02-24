@@ -427,6 +427,30 @@
 </div>
 
 <!-- Delete Confirm Modal -->
+<!-- Export Progress Modal -->
+<div id="export-modal" class="hidden fixed inset-0 z-[300] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
+        <div id="export-spinner" class="w-16 h-16 mx-auto mb-4">
+            <svg class="animate-spin w-16 h-16 text-green-600" viewBox="0 0 24 24" fill="none">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+        </div>
+        <div id="export-success-icon" class="hidden w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <div id="export-error-icon" class="hidden w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+        </div>
+        <h3 id="export-title" class="text-lg font-bold text-gray-800 mb-2">מייצא לאקסל...</h3>
+        <p id="export-message" class="text-gray-500 text-sm mb-4">מכין את הקובץ, רגע...</p>
+        <div id="export-progress-bar" class="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+            <div id="export-progress-fill" class="h-full bg-gradient-to-l from-green-400 to-green-600 rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+    </div>
+</div>
+
 <div id="delete-modal" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/50" id="delete-modal-overlay"></div>
     <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-sm p-6 text-center">
@@ -741,8 +765,64 @@ document.getElementById('search-input').addEventListener('input', (e) => {
 
 // ─── Export ───────────────────────────────────────────────
 
-document.getElementById('export-btn').addEventListener('click', () => {
-    window.open('/api/admin/export', '_blank');
+document.getElementById('export-btn').addEventListener('click', async () => {
+    const modal = document.getElementById('export-modal');
+    const spinner = document.getElementById('export-spinner');
+    const successIcon = document.getElementById('export-success-icon');
+    const errorIcon = document.getElementById('export-error-icon');
+    const title = document.getElementById('export-title');
+    const message = document.getElementById('export-message');
+    const progressBar = document.getElementById('export-progress-bar');
+    const progressFill = document.getElementById('export-progress-fill');
+
+    // Reset & show
+    spinner.classList.remove('hidden');
+    successIcon.classList.add('hidden');
+    errorIcon.classList.add('hidden');
+    title.textContent = 'מייצא לאקסל...';
+    message.textContent = 'מכין את הקובץ, רגע...';
+    progressBar.classList.remove('hidden');
+    progressFill.style.width = '10%';
+    modal.classList.remove('hidden');
+
+    try {
+        progressFill.style.width = '30%';
+        const res = await fetch('/api/admin/export');
+        progressFill.style.width = '60%';
+
+        if (!res.ok) throw new Error('שגיאה בשרת');
+
+        message.textContent = 'מוריד את הקובץ...';
+        progressFill.style.width = '80%';
+        const blob = await res.blob();
+        progressFill.style.width = '100%';
+
+        // Trigger download
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const d = new Date().toISOString().split('T')[0];
+        a.download = `tofaat-teva-${d}.xlsx`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+
+        // Success state
+        spinner.classList.add('hidden');
+        progressBar.classList.add('hidden');
+        successIcon.classList.remove('hidden');
+        title.textContent = 'הקובץ מוכן!';
+        message.textContent = 'הקובץ הורד בהצלחה';
+        setTimeout(() => modal.classList.add('hidden'), 1800);
+    } catch (e) {
+        spinner.classList.add('hidden');
+        progressBar.classList.add('hidden');
+        errorIcon.classList.remove('hidden');
+        title.textContent = 'שגיאה בייצוא';
+        message.textContent = e.message || 'נסה שוב מאוחר יותר';
+        setTimeout(() => modal.classList.add('hidden'), 3000);
+    }
 });
 
 // ─── Refresh ─────────────────────────────────────────────
